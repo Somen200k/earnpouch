@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, BadgeCheck, BookOpen, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BadgeCheck, ShieldCheck } from "lucide-react";
 import { listPosts } from "@/lib/posts";
 
 const categories = [
@@ -14,17 +14,37 @@ export default function Home() {
   const posts = listPosts().slice(0, 3);
   const featured = posts[0];
   return <main>
-    <section className="relative overflow-hidden border-b border-slate-200 bg-white">
-      <div className="absolute inset-y-0 right-0 hidden w-[47%] bg-[url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1400&q=85')] bg-cover bg-center lg:block" aria-hidden="true" />
-      <div className="absolute inset-y-0 right-0 hidden w-[47%] bg-gradient-to-r from-white via-white/45 to-transparent lg:block" aria-hidden="true" />
-      <div className="relative mx-auto grid min-h-[570px] max-w-7xl items-center gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_0.75fr] lg:px-12">
-        <div className="max-w-2xl"><div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-emerald-800"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Money, made more manageable</div>
-          <h1 className="editorial-serif max-w-xl text-5xl leading-[1.05] text-slate-950 sm:text-6xl lg:text-7xl">Make your money go <span className="text-emerald-700">further.</span></h1>
-          <p className="mt-6 max-w-lg text-lg leading-8 text-slate-600">Clear-eyed guides to earning a little extra, finding useful rewards, and making a budget that works in real life.</p>
-          <div className="mt-8 flex flex-wrap items-center gap-4"><Link href="#latest" className="inline-flex min-h-12 items-center gap-2 rounded-md bg-green-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-green-700">Explore the latest <ArrowRight size={17} /></Link><Link href="/blog" className="inline-flex min-h-12 items-center gap-2 px-3 py-3 text-sm font-bold text-slate-700 hover:text-blue-700">Browse all guides <ArrowUpRight size={16} /></Link></div>
-          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-slate-200 pt-5 text-sm text-slate-600"><span className="inline-flex items-center gap-2"><BadgeCheck size={17} className="text-blue-600" /> Researched recommendations</span><span className="inline-flex items-center gap-2"><ShieldCheck size={17} className="text-blue-600" /> Straightforward disclosures</span></div>
+    <section className="relative isolate overflow-hidden border-b border-emerald-200 bg-[#edf5f0]">
+      <div className="absolute inset-y-0 right-0 hidden w-[47%] lg:block" aria-hidden="true"><Image src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1400&q=85" alt="" fill sizes="47vw" className="object-cover" /><div className="absolute inset-0 bg-gradient-to-r from-[#edf5f0] via-[#edf5f0]/35 to-transparent" /></div>
+      <div className="mx-auto max-w-7xl px-5 py-5 sm:hidden">
+        <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.13em] text-emerald-900"><span className="h-2 w-2 rounded-full bg-emerald-600" /><span>Practical money guides</span></div>
+        <h1 className="editorial-serif mt-3 text-[42px] leading-[0.98] text-slate-950">Make your money go <span className="text-emerald-700">further.</span></h1>
+        <p className="mt-3 max-w-lg text-sm leading-6 text-slate-700">Clear-eyed guides to earning a little extra, finding useful rewards, and making a budget that works in real life.</p>
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2"><Link href="#latest" className="inline-flex min-h-11 items-center gap-2 rounded-md bg-green-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-green-700">Explore the latest <ArrowRight size={17} /></Link><Link href="/blog" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-slate-800 underline decoration-emerald-600 decoration-2 underline-offset-4 hover:text-blue-700">Browse all guides <ArrowUpRight size={15} /></Link></div>
+        <Link href={featured ? `/blog/${featured.slug}` : "/blog"} aria-label={featured ? `Read ${featured.title}` : "Browse EarnPouch guides"} className="group relative mt-5 block aspect-[1.75/1] overflow-hidden border-l-[3px] border-emerald-600 bg-slate-300">
+          <Image src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1400&q=85" alt="A person reviewing financial documents at a table" fill priority sizes="100vw" className="object-cover object-center transition duration-700 group-hover:scale-[1.02]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/35 via-transparent to-transparent" />
+          <div className="absolute bottom-3 left-3 right-[18%] border border-white/70 bg-white/95 p-3 shadow-lg"><span className="block text-[9px] font-bold uppercase tracking-[0.12em] text-emerald-700">Editor&apos;s starting point</span><h2 className="editorial-serif mt-1 line-clamp-2 text-base leading-tight text-slate-950">{featured?.title ?? "Small steps for a steadier month."}</h2><span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-blue-700">Read the guide <ArrowRight size={13} /></span></div>
+        </Link>
+        <div className="mt-3 flex items-center gap-2 border-t border-emerald-200 pt-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-600"><BadgeCheck size={15} className="shrink-0 text-blue-700" /><span>Useful advice. Clear disclosures. No magic-income claims.</span></div>
+      </div>
+      <div className="relative mx-auto hidden max-w-7xl px-5 py-5 sm:block sm:px-8 sm:py-10 lg:px-12 lg:py-14">
+        <div className="grid grid-cols-[minmax(0,1.15fr)_minmax(120px,0.85fr)] gap-x-3 gap-y-3 sm:grid-cols-[minmax(0,1fr)_minmax(300px,0.9fr)] sm:gap-x-12 sm:gap-y-6">
+          <div className="col-start-1 row-start-1 self-end">
+            <div className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.13em] text-emerald-900 sm:mb-5 sm:text-xs"><span className="border-y border-emerald-700 py-1">EP / 01</span><span className="h-px w-5 bg-emerald-700 sm:w-8" /><span>Everyday money desk</span></div>
+            <h1 className="editorial-serif text-[36px] leading-[0.98] text-slate-950 sm:text-6xl lg:text-7xl">Make your <br className="hidden sm:block" />money go <span className="text-emerald-700">further.</span></h1>
+          </div>
+          <Link href={featured ? `/blog/${featured.slug}` : "/blog"} aria-label={featured ? `Read ${featured.title}` : "Browse EarnPouch guides"} className="group relative col-start-2 row-start-1 min-h-[174px] overflow-hidden border-l-[3px] border-emerald-600 bg-slate-300 sm:row-span-2 sm:min-h-[400px] sm:border-l-4 lg:hidden">
+            <Image src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1400&q=85" alt="A close-up of someone reviewing everyday finances at a desk" fill priority sizes="(max-width: 640px) 42vw, (max-width: 1024px) 40vw, 42vw" className="object-cover transition duration-700 group-hover:scale-[1.03]" />
+            <div className="absolute bottom-2 left-2 right-2 border border-white/70 bg-white/95 p-2 shadow-lg sm:bottom-4 sm:left-4 sm:right-4 sm:p-4 lg:hidden"><span className="block text-[8px] font-bold uppercase tracking-[0.1em] text-emerald-700 sm:text-[10px]">Editor&apos;s starting point</span><span className="mt-1 inline-flex items-center gap-1 text-[10px] font-semibold text-blue-700 sm:mt-2 sm:text-sm">Read the guide <ArrowRight size={12} /></span></div>
+          </Link>
+          <div className="col-span-2 col-start-1 row-start-2 max-w-xl sm:col-span-1 sm:row-start-2">
+            <p className="max-w-lg text-sm leading-6 text-slate-700 sm:text-lg sm:leading-8">Clear-eyed guides to earning a little extra, finding useful rewards, and making a budget that works in real life.</p>
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 sm:mt-7"><Link href="#latest" className="inline-flex min-h-11 items-center gap-2 rounded-md bg-green-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-green-700 sm:px-5">Explore the latest <ArrowRight size={17} /></Link><Link href="/blog" className="inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-slate-800 underline decoration-emerald-600 decoration-2 underline-offset-4 hover:text-blue-700">Browse all guides <ArrowUpRight size={15} /></Link></div>
+            <div className="mt-4 flex items-center gap-2 border-t border-emerald-200 pt-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-600 sm:mt-7 sm:gap-3 sm:pt-4 sm:text-xs"><BadgeCheck size={15} className="shrink-0 text-blue-700" /><span>Useful advice. Clear disclosures. No magic-income claims.</span><ShieldCheck size={15} className="hidden shrink-0 text-emerald-700 sm:block" /></div>
+          </div>
         </div>
-        <div className="relative hidden min-h-72 lg:block">{featured ? <Link href={`/blog/${featured.slug}`} className="absolute bottom-7 left-0 max-w-sm border border-white/70 bg-white/95 p-5 shadow-xl backdrop-blur-sm transition hover:-translate-y-1"><span className="text-xs font-bold uppercase tracking-[0.15em] text-emerald-700">Editor&apos;s starting point</span><h2 className="editorial-serif mt-2 text-2xl leading-tight">{featured.title}</h2><span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-700">Read the guide <ArrowRight size={15} /></span></Link> : <div className="absolute bottom-7 left-0 flex items-center gap-3 border border-white/70 bg-white/95 p-5 shadow-xl"><BookOpen className="text-emerald-700" /><span className="font-semibold">Practical advice, without the noise.</span></div>}</div>
+        {featured && <Link href={`/blog/${featured.slug}`} className="absolute bottom-10 left-8 hidden max-w-sm border border-white/70 bg-white/95 p-5 shadow-xl backdrop-blur-sm transition hover:-translate-y-1 lg:left-auto lg:right-12 lg:block"><span className="text-xs font-bold uppercase tracking-[0.15em] text-emerald-700">Editor&apos;s starting point</span><h2 className="editorial-serif mt-2 text-2xl leading-tight">{featured.title}</h2><span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-700">Read the guide <ArrowRight size={15} /></span></Link>}
       </div>
     </section>
     <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-12 lg:py-20"><div className="mb-8 flex items-end justify-between gap-5"><div><p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700">Find your next step</p><h2 className="editorial-serif mt-2 text-3xl sm:text-4xl">Explore by interest</h2></div><span className="hidden text-sm text-slate-500 sm:block">Useful reads for everyday money decisions</span></div>
