@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+	color-scheme: light;
+	--page: #f8fafc;
+	--ink: #0f172a;
+	--muted: #64748b;
+	--line: #e2e8f0;
+	--blue: #2563eb;
+	--green: #16a34a;
+	--green-dark: #15803d;
+	--gold: #fbbf24;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--page); color: var(--ink); font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font: inherit; }
+.editorial-serif { font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif; letter-spacing: 0; }
+.article-content :where(h2, h3) { scroll-margin-top: 7rem; }
+.article-content :where(a) { color: #1d4ed8; }
+.article-content :where(img) { border-radius: 0.75rem; }
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

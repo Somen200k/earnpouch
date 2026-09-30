@@ -1,0 +1,8 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import type { ComparisonEntry } from "@/lib/posts";
+
+export function ComparisonTable({ entries }: { entries: ComparisonEntry[] }) {
+  if (!entries.length) return null;
+  return <div className="my-9 overflow-x-auto border border-slate-200 bg-white"><table className="w-full min-w-[660px] border-collapse text-left text-sm"><thead className="bg-slate-100 text-xs uppercase tracking-wider text-slate-600"><tr><th className="px-4 py-3">Platform name</th><th className="px-4 py-3">Free bonus</th><th className="px-4 py-3">Cashout min.</th><th className="px-4 py-3">Payout method</th><th className="px-4 py-3">Explore</th></tr></thead><tbody className="divide-y divide-slate-200">{entries.map((entry) => <tr key={entry.name} className="align-middle"><th scope="row" className="px-4 py-4 font-semibold text-slate-900">{entry.name}</th><td className="px-4 py-4 text-slate-600">{entry.bonus}</td><td className="px-4 py-4 text-slate-600">{entry.cashoutMin}</td><td className="px-4 py-4 text-slate-600">{entry.payoutMethod}</td><td className="px-4 py-4">{entry.url ? <Link href={entry.url} target="_blank" rel="sponsored nofollow noopener noreferrer" className="inline-flex items-center gap-1 font-bold text-blue-700 hover:text-blue-900">View offer <ArrowUpRight size={14} /></Link> : <span className="text-slate-400">Details</span>}</td></tr>)}</tbody></table></div>;
+}
