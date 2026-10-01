@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, CalendarDays } from "lucide-react";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import { MobileOfferBar } from "@/components/MobileOfferBar";
+import { OfferCta } from "@/components/OfferCta";
 import { QuickPickHero } from "@/components/QuickPickHero";
 import { getPost, listPosts } from "@/lib/posts";
 import { renderMarkdown } from "@/lib/render-markdown";
@@ -45,6 +46,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         <script dangerouslySetInnerHTML={{ __html: "(function(s){s.dataset.zone='11932119',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))" }} />
         {post.comparison.length > 0 && <section className="mt-10"><h2 className="editorial-serif text-3xl">Compare the options</h2><p className="mt-2 text-sm text-slate-600">Terms are subject to change. Confirm details on each provider&apos;s website.</p><ComparisonTable entries={post.comparison} /></section>}
         {post.faqs.length > 0 && <section className="mt-12 border-t border-slate-200 pt-8"><h2 className="editorial-serif text-3xl">Frequently asked questions</h2><div className="mt-5 divide-y divide-slate-200">{post.faqs.map((faq) => <details key={faq.question} className="py-4"><summary className="cursor-pointer font-semibold text-slate-900">{faq.question}</summary><p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">{faq.answer}</p></details>)}</div></section>}
+        <OfferCta post={post} secondary />
         <div className="mt-10 border-t border-slate-200 pt-5 text-xs leading-5 text-slate-500">This article is for informational purposes only and is not financial, tax, or legal advice. See our <Link href="/affiliate-disclosure" className="font-semibold text-blue-700 underline">affiliate disclosure</Link>.</div>
       </div>
     </div><MobileOfferBar title={post.quickPick?.name ?? post.title} href={post.primaryCpaUrl} />

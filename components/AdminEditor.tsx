@@ -1,7 +1,7 @@
 "use client";
 
 import { type ChangeEvent, type FormEvent, useEffect, useMemo, useState } from "react";
-import { Check, FileText, GitBranch, LockKeyhole, Search, Settings2, Sparkles } from "lucide-react";
+import { Check, FileText, GitBranch, LockKeyhole, Plus, Search, Settings2, Sparkles } from "lucide-react";
 import { toSlug } from "@/lib/slug";
 
 const categories = ["Reward Apps", "Side Hustles", "Smart Budgeting", "Remote Work"] as const;
@@ -18,6 +18,7 @@ type Draft = {
 	content: string;
 	published: boolean;
 };
+type ExistingPost = { slug: string; title: string };
 
 type SiteSettingsState = {
 	siteName: string;
@@ -62,10 +63,27 @@ export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local fi
 	const [slugEdited, setSlugEdited] = useState(false);
 	const [saving, setSaving] = useState(false);
 	const [message, setMessage] = useState<{ error: boolean; text: string } | null>(null);
+	const [existingPosts, setExistingPosts] = useState<ExistingPost[]>([]);
+	const [selectedPostSlug, setSelectedPostSlug] = useState("");
+	const [postsLoading, setPostsLoading] = useState(true);
+	const [selectedPostLoading, setSelectedPostLoading] = useState(false);
 	const [siteSettings, setSiteSettings] = useState<SiteSettingsState>(initialSiteSettings);
 	const [settingsSaving, setSettingsSaving] = useState(false);
 	const [settingsMessage, setSettingsMessage] = useState<{ error: boolean; text: string } | null>(null);
 	const wordCount = useMemo(() => draft.content.trim() ? draft.content.trim().split(/\s+/).length : 0, [draft.content]);
+
+	useEffect(() => {
+		fetch("/api/admin/posts")
+			.then(async (response) => {
+				const result = await response.json() as { posts?: ExistingPost[]; error?: string };
+				if (!response.ok) throw new Error(result.error ?? "Unable to load existing posts.");
+				setExistingPosts(Array.isArray(result.posts) ? result.posts : []);
+			})
+			.catch((error: unknown) => {
+				setMessage({ error: true, text: error instanceof Error ? error.message : "Unable to load existing posts." });
+			})
+			.finally(() => setPostsLoading(false));
+	}, []);
 
 	useEffect(() => {
 		fetch("/api/admin/settings")
@@ -100,6 +118,47 @@ export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local fi
 		update("slug", toSlug(event.target.value));
 	}
 
+	async function selectExistingPost(event: ChangeEvent<HTMLSelectElement>) {
+		const slug = event.target.value;
+		setSelectedPostSlug(slug);
+		setMessage(null);
+		if (!slug) return;
+
+		setSelectedPostLoading(true);
+		try {
+			const response = await fetch(`/api/admin/posts?slug=${encodeURIComponent(slug)}`);
+			const result = await response.json() as Partial<Draft> & { tags?: string[]; error?: string };
+			if (!response.ok) throw new Error(result.error ?? "Unable to load this post.");
+			setDraft({
+				title: result.title ?? "",
+				slug: result.slug ?? slug,
+				category: categories.includes(result.category as Draft["category"]) ? result.category as Draft["category"] : categories[0],
+				date: result.date ?? "",
+				excerpt: result.excerpt ?? "",
+				coverImage: result.coverImage ?? "",
+				tags: Array.isArray(result.tags) ? result.tags.join(", ") : "",
+				primaryCpaUrl: result.primaryCpaUrl ?? "",
+				content: result.content ?? "",
+				published: result.published === true,
+			});
+			setSlugEdited(true);
+		} catch (error) {
+			setSelectedPostSlug("");
+			setDraft({ ...initialDraft, date: new Date().toISOString().slice(0, 10) });
+			setSlugEdited(false);
+			setMessage({ error: true, text: error instanceof Error ? error.message : "Unable to load this post." });
+		} finally {
+			setSelectedPostLoading(false);
+		}
+	}
+
+	function startNewPost() {
+		setDraft({ ...initialDraft, date: new Date().toISOString().slice(0, 10) });
+		setSelectedPostSlug("");
+		setSlugEdited(false);
+		setMessage(null);
+	}
+
 	async function submit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		setSaving(true);
@@ -110,12 +169,21 @@ export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local fi
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					...draft,
+					existingSlug: selectedPostSlug || undefined,
 					tags: draft.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
 				}),
 			});
 			const result = await response.json() as { error?: string; slug?: string };
 			if (!response.ok) throw new Error(result.error ?? "Unable to save this post.");
-			setMessage({ error: false, text: `${draft.published ? "Published" : "Saved draft"}: ${result.slug}.md` });
+			const savedSlug = result.slug ?? draft.slug;
+			setSelectedPostSlug(savedSlug);
+			setDraft((current) => ({ ...current, slug: savedSlug }));
+			const postsResponse = await fetch("/api/admin/posts");
+			if (postsResponse.ok) {
+				const postsResult = await postsResponse.json() as { posts?: ExistingPost[] };
+				setExistingPosts(Array.isArray(postsResult.posts) ? postsResult.posts : []);
+			}
+			setMessage({ error: false, text: `${selectedPostSlug ? "Updated" : draft.published ? "Published" : "Saved draft"}: ${savedSlug}.md` });
 		} catch (error) {
 			setMessage({ error: true, text: error instanceof Error ? error.message : "Unable to reach the publishing service." });
 		} finally {
@@ -202,7 +270,13 @@ export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local fi
 
 		<div className="mx-auto max-w-5xl px-5 py-8 sm:px-8 lg:px-12">
 			{tab === "Blog" ? <form onSubmit={submit} className="space-y-6">
-				<div className="flex flex-wrap items-start justify-between gap-4"><div><h2 className="text-lg font-semibold">Create a post</h2><p className="mt-1 text-sm text-slate-400">Markdown articles are saved to the content library.</p></div><div className="flex items-center gap-2"><span className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-300">{storageMode === "GitHub" ? "GitHub sync" : "Local storage"}</span><label className="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded border border-slate-700 bg-slate-900 px-3 text-sm"><input type="checkbox" checked={draft.published} onChange={(event) => update("published", event.target.checked)} className="h-4 w-4 accent-emerald-500" />Published</label></div></div>
+				<div className="space-y-4 border-b border-slate-800 pb-5">
+					<div className="flex flex-wrap items-end justify-between gap-4">
+						<label className={`${labelClass} min-w-64 flex-1`}>Existing posts<select className={inputClass} value={selectedPostSlug} onChange={selectExistingPost} disabled={postsLoading || selectedPostLoading}><option value="">{postsLoading ? "Loading posts..." : "Select a post to edit"}</option>{existingPosts.map((post) => <option key={post.slug} value={post.slug}>{post.title} ({post.slug})</option>)}</select></label>
+						<button type="button" onClick={startNewPost} className="inline-flex min-h-11 items-center gap-2 rounded border border-slate-600 px-4 text-sm font-semibold text-slate-200 transition hover:border-amber-400 hover:text-white"><Plus size={16} />New Post</button>
+					</div>
+					<div className="flex flex-wrap items-start justify-between gap-4"><div><h2 className="text-lg font-semibold">{selectedPostSlug ? "Edit post" : "Create a post"}</h2><p className="mt-1 text-sm text-slate-400">Markdown articles are saved to the content library.</p></div><div className="flex items-center gap-2"><span className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-300">{storageMode === "GitHub" ? "GitHub sync" : "Local storage"}</span><label className="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded border border-slate-700 bg-slate-900 px-3 text-sm"><input type="checkbox" checked={draft.published} onChange={(event) => update("published", event.target.checked)} className="h-4 w-4 accent-emerald-500" />Published</label></div></div>
+				</div>
 				<div className="grid gap-5 sm:grid-cols-2">
 					<label className={labelClass}>Title<input className={inputClass} required minLength={5} maxLength={160} value={draft.title} onChange={(event) => update("title", event.target.value)} /></label>
 					<label className={labelClass}>Slug<input className={inputClass} required pattern="[a-z0-9]+(-[a-z0-9]+)*" value={draft.slug} onChange={updateSlug} /></label>
@@ -214,7 +288,7 @@ export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local fi
 					<label className={`${labelClass} sm:col-span-2`}>Primary CPA link / BeMob URL<input type="url" className={inputClass} value={draft.primaryCpaUrl} onChange={(event) => update("primaryCpaUrl", event.target.value)} /></label>
 				</div>
 				<label className={labelClass}>Content (Markdown)<textarea className={`${inputClass} min-h-[380px] resize-y py-3 font-mono text-[13px] leading-6`} required minLength={100} maxLength={100000} value={draft.content} onChange={(event) => update("content", event.target.value)} placeholder="## Start with the essentials&#10;&#10;Write useful, specific guidance here..." /><span className="mt-2 block text-xs text-slate-500">{wordCount.toLocaleString()} words</span></label>
-				<div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 pt-5"><p className="inline-flex items-center gap-2 text-xs leading-5 text-slate-500"><LockKeyhole size={14} />Signed-in admin session • {storageMode}</p><button type="submit" disabled={saving} className="inline-flex min-h-12 items-center gap-2 rounded bg-amber-400 px-5 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300 disabled:cursor-wait disabled:opacity-60"><Sparkles size={16} />{saving ? "Saving..." : draft.published ? "Publish Post" : "Save Draft"}</button></div>
+				<div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 pt-5"><p className="inline-flex items-center gap-2 text-xs leading-5 text-slate-500"><LockKeyhole size={14} />Signed-in admin session • {storageMode}</p><button type="submit" disabled={saving || selectedPostLoading} className="inline-flex min-h-12 items-center gap-2 rounded bg-amber-400 px-5 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300 disabled:cursor-wait disabled:opacity-60"><Sparkles size={16} />{saving ? "Saving..." : selectedPostLoading ? "Loading post..." : draft.published ? "Publish Post" : "Save Draft"}</button></div>
 				{message && <p role="status" className={`inline-flex items-center gap-2 text-sm ${message.error ? "text-red-300" : "text-emerald-300"}`}>{!message.error && <Check size={16} />}{message.text}</p>}
 			</form> : tab === "SEO" ? <section><h2 className="text-lg font-semibold">Search presentation</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Published articles use their title and excerpt for search and social metadata.</p><div className="mt-6 divide-y divide-slate-800 border-y border-slate-800">{[["Canonical host", "https://www.earnpouch.com"], ["Sitemap", "/sitemap.xml"], ["Robots policy", "/robots.txt"]].map(([label, value]) => <div key={label} className="flex justify-between gap-3 py-4 text-sm"><span className="text-slate-400">{label}</span><span className="font-medium text-slate-200">{value}</span></div>)}</div></section> : <form onSubmit={saveSiteSettings} className="space-y-6"><div><h2 className="text-lg font-semibold">Website settings</h2><p className="mt-1 text-sm text-slate-400">Update the brand, homepage copy, and navigation from this dashboard.</p></div>
 				<div className="grid gap-5 sm:grid-cols-2">
