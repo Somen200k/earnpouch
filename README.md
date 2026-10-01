@@ -1,6 +1,6 @@
 # EarnPouch
 
-EarnPouch is a Next.js 15 editorial site with markdown-backed articles, legal pages, SEO metadata, and a token-protected publishing form.
+EarnPouch is a Next.js 15 editorial site with markdown-backed articles, legal pages, SEO metadata, and a token-protected publishing form. 
 
 ## Run locally
 
