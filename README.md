@@ -5,10 +5,39 @@ EarnPouch is a Next.js 15 editorial site with markdown-backed articles, legal pa
 ## Run locally
 
 1. Install dependencies with `npm install`.
-2. Copy `.env.example` to `.env.local` and set `PUBLISH_TOKEN` to a unique random value of at least 24 characters. Set `NEXT_PUBLIC_GA_ID` only when a GA4 property is configured.
+2. Copy `.env.example` to `.env.local` and set the required values.
 3. Run `npm run dev` and visit `http://localhost:3000`.
 
-On PowerShell, a token can be generated with `[Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(32))`.
+Required local and Vercel env vars:
+
+- `ADMIN_USERNAME` — admin login username
+- `ADMIN_PASSWORD` — admin login password
+- `ADMIN_SESSION_SECRET` — long random string used to sign the admin session cookie
+- `PUBLISH_TOKEN` — unique random value of at least 24 characters used to authorize article publishing
+- `NEXT_PUBLIC_GA_ID` — optional GA4 measurement ID
+- `GITHUB_CONTENT_TOKEN` and `GITHUB_REPOSITORY` — optional GitHub storage settings for server-side publishing instead of the local filesystem
+- `GITHUB_BRANCH` — optional GitHub branch name, defaults to `main`
+
+On PowerShell, a secure token can be generated with `[Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(32))`.
+
+## Vercel deployment
+
+In the Vercel dashboard, open the project, then go to Settings → Environment Variables and add the same values used in `.env.local`.
+
+Recommended production variables:
+
+```bash
+ADMIN_USERNAME=your-admin-username
+ADMIN_PASSWORD=your-strong-password
+ADMIN_SESSION_SECRET=generate-a-long-random-string
+PUBLISH_TOKEN=generate-a-long-random-string
+NEXT_PUBLIC_GA_ID=
+GITHUB_CONTENT_TOKEN=
+GITHUB_REPOSITORY=
+GITHUB_BRANCH=main
+```
+
+If you use GitHub-backed content storage, leave `GITHUB_CONTENT_TOKEN` and `GITHUB_REPOSITORY` set. Otherwise the admin panel will save posts to the local filesystem at `content/posts/*.md`.
 
 ## Content publishing
 

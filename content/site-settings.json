@@ -1,0 +1,34 @@
+{
+  "siteName": "EarnPouch",
+  "tagline": "Make your money go further.",
+  "heroTitle": "Make your money go further.",
+  "heroSubtitle": "Clear-eyed guides to earning a little extra, finding useful rewards, and making a budget that works in real life.",
+  "heroBadge": "Practical money guides",
+  "description": "Straightforward guides to reward apps, flexible side hustles, smarter budgets, and remote work.",
+  "navLinks": [
+    "Reward Apps",
+    "Side Hustles",
+    "Smart Budgeting",
+    "Remote Work"
+  ],
+  "categories": [
+    {
+      "name": "Reward Apps",
+      "description": "Get more from the time you already spend online."
+    },
+    {
+      "name": "Side Hustles",
+      "description": "Flexible ways to put your skills and spare hours to work."
+    },
+    {
+      "name": "Smart Budgeting",
+      "description": "Simple systems for keeping more of what you earn."
+    },
+    {
+      "name": "Remote Work",
+      "description": "Find legitimate opportunities beyond the office."
+    }
+  ],
+  "footerText": "Good information for earning, saving, and making the most of your money.",
+  "affiliateNotice": "EarnPouch is reader-supported. We may earn an affiliate commission when you sign up through our links at no extra cost to you."
+}
