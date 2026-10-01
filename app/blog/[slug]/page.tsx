@@ -49,6 +49,6 @@ export default async function BlogPostPage({ params }: PageProps) {
         <OfferCta post={post} secondary />
         <div className="mt-10 border-t border-slate-200 pt-5 text-xs leading-5 text-slate-500">This article is for informational purposes only and is not financial, tax, or legal advice. See our <Link href="/affiliate-disclosure" className="font-semibold text-blue-700 underline">affiliate disclosure</Link>.</div>
       </div>
-    </div><MobileOfferBar title={post.quickPick?.name ?? post.title} href={post.primaryCpaUrl} />
+    </div><MobileOfferBar post={post} />
   </main>;
 }
