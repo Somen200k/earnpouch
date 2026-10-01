@@ -35,8 +35,9 @@ export function verifyAdminCredentials(username: string, password: string): bool
 export function createAdminSessionToken(username: string): string {
   const sessionSecret = process.env.ADMIN_SESSION_SECRET ?? "earnpouch-dev-secret";
   const payload = `${username}:${Date.now()}`;
-  const signature = createHmac("sha256", sessionSecret).update(payload).digest("base64url");
-  return `${Buffer.from(payload, "utf8").toString("base64url")}.${signature}`;
+  const encodedPayload = Buffer.from(payload, "utf8").toString("base64url");
+  const signature = createHmac("sha256", sessionSecret).update(encodedPayload).digest("base64url");
+  return `${encodedPayload}.${signature}`;
 }
 
 export function verifyAdminSessionToken(token: string): boolean {
