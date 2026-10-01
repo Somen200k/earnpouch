@@ -36,7 +36,6 @@ export function AdminEditor() {
 	const [tab, setTab] = useState<Tab>("Blog");
 	const [draft, setDraft] = useState<Draft>(initialDraft);
 	const [slugEdited, setSlugEdited] = useState(false);
-	const [token, setToken] = useState("");
 	const [saving, setSaving] = useState(false);
 	const [message, setMessage] = useState<{ error: boolean; text: string } | null>(null);
 	const wordCount = useMemo(() => draft.content.trim() ? draft.content.trim().split(/\s+/).length : 0, [draft.content]);
@@ -61,7 +60,7 @@ export function AdminEditor() {
 		try {
 			const response = await fetch("/api/publish", {
 				method: "POST",
-				headers: { "Content-Type": "application/json", "X-Publish-Token": token },
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					...draft,
 					tags: draft.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
@@ -79,6 +78,16 @@ export function AdminEditor() {
 
 	const inputClass = "mt-2 block min-h-11 w-full rounded border border-[#334155] bg-[#0f172a] px-3 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20";
 	const labelClass = "block text-sm font-medium text-slate-300";
+
+	async function logout() {
+		try {
+			await fetch("/api/admin/logout", { method: "POST" });
+			window.location.href = "/admin/login";
+		} catch {
+			window.location.href = "/admin/login";
+		}
+	}
+
 	const tabs = [
 		{ name: "Blog" as const, Icon: FileText },
 		{ name: "SEO" as const, Icon: Search },
@@ -89,7 +98,10 @@ export function AdminEditor() {
 		<header className="border-b border-slate-800 bg-[#111827]">
 			<div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:px-12">
 				<div><p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-400">EarnPouch workspace</p><h1 className="mt-1 text-xl font-bold">Content studio</h1></div>
-				<span className="inline-flex items-center gap-2 rounded-full border border-emerald-800 bg-emerald-950/70 px-3 py-1.5 text-xs font-semibold text-emerald-300"><GitBranch size={14} />GitHub Connected</span>
+				<div className="flex items-center gap-3">
+					<span className="inline-flex items-center gap-2 rounded-full border border-emerald-800 bg-emerald-950/70 px-3 py-1.5 text-xs font-semibold text-emerald-300"><GitBranch size={14} />GitHub Connected</span>
+					<button type="button" onClick={logout} className="inline-flex min-h-10 items-center rounded border border-slate-700 bg-slate-900 px-3 text-xs font-semibold text-slate-200 transition hover:border-slate-500 hover:text-white">Log out</button>
+				</div>
 			</div>
 			<nav className="mx-auto flex max-w-7xl gap-1 px-5 sm:px-8 lg:px-12" aria-label="Admin sections">
 				{tabs.map(({ name, Icon }) => <button key={name} type="button" onClick={() => setTab(name)} aria-current={tab === name ? "page" : undefined} className={`inline-flex min-h-11 items-center gap-2 border-b-2 px-4 text-sm font-semibold ${tab === name ? "border-amber-400 text-amber-300" : "border-transparent text-slate-400 hover:text-slate-100"}`}><Icon size={15} />{name}</button>)}
@@ -110,8 +122,7 @@ export function AdminEditor() {
 					<label className={`${labelClass} sm:col-span-2`}>Primary CPA link / BeMob URL<input type="url" className={inputClass} value={draft.primaryCpaUrl} onChange={(event) => update("primaryCpaUrl", event.target.value)} /></label>
 				</div>
 				<label className={labelClass}>Content (Markdown)<textarea className={`${inputClass} min-h-[380px] resize-y py-3 font-mono text-[13px] leading-6`} required minLength={100} maxLength={100000} value={draft.content} onChange={(event) => update("content", event.target.value)} placeholder="## Start with the essentials&#10;&#10;Write useful, specific guidance here..." /><span className="mt-2 block text-xs text-slate-500">{wordCount.toLocaleString()} words</span></label>
-				<label className={labelClass}><span className="inline-flex items-center gap-2"><LockKeyhole size={15} />Publishing token</span><input type="password" autoComplete="off" required minLength={24} value={token} onChange={(event) => setToken(event.target.value)} className={inputClass} /></label>
-				<div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 pt-5"><p className="max-w-xl text-xs leading-5 text-slate-500">The token is sent to the server for this request only.</p><button type="submit" disabled={saving} className="inline-flex min-h-12 items-center gap-2 rounded bg-amber-400 px-5 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300 disabled:cursor-wait disabled:opacity-60"><Sparkles size={16} />{saving ? "Saving..." : draft.published ? "Publish Post" : "Save Draft"}</button></div>
+				<div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 pt-5"><p className="inline-flex items-center gap-2 text-xs leading-5 text-slate-500"><LockKeyhole size={14} />Signed-in admin session</p><button type="submit" disabled={saving} className="inline-flex min-h-12 items-center gap-2 rounded bg-amber-400 px-5 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300 disabled:cursor-wait disabled:opacity-60"><Sparkles size={16} />{saving ? "Saving..." : draft.published ? "Publish Post" : "Save Draft"}</button></div>
 				{message && <p role="status" className={`inline-flex items-center gap-2 text-sm ${message.error ? "text-red-300" : "text-emerald-300"}`}>{!message.error && <Check size={16} />}{message.text}</p>}
 			</form> : tab === "SEO" ? <section><h2 className="text-lg font-semibold">Search presentation</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Published articles use their title and excerpt for search and social metadata.</p><div className="mt-6 divide-y divide-slate-800 border-y border-slate-800">{[["Canonical host", "https://www.earnpouch.com"], ["Sitemap", "/sitemap.xml"], ["Robots policy", "/robots.txt"]].map(([label, value]) => <div key={label} className="flex justify-between gap-3 py-4 text-sm"><span className="text-slate-400">{label}</span><span className="font-medium text-slate-200">{value}</span></div>)}</div></section> : <section><h2 className="text-lg font-semibold">Workspace settings</h2><div className="mt-6 divide-y divide-slate-800 border-y border-slate-800">{[["Publish authorization", "PUBLISH_TOKEN"], ["Analytics measurement", "NEXT_PUBLIC_GA_ID (optional)"], ["Content storage", "content/posts/*.md"]].map(([label, value]) => <div key={label} className="flex justify-between gap-3 py-4 text-sm"><span className="text-slate-400">{label}</span><span className="font-medium text-slate-200">{value}</span></div>)}</div></section>}
 		</div>

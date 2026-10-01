@@ -4,6 +4,8 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 import { stringify } from "gray-matter";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { ADMIN_SESSION_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
 import { categories, postDirectory } from "@/lib/posts";
 import { toSlug } from "@/lib/slug";
 
@@ -26,13 +28,53 @@ function matchesToken(provided: string, expected: string): boolean {
   return providedBuffer.length === expectedBuffer.length && timingSafeEqual(providedBuffer, expectedBuffer);
 }
 
+async function saveToGitHub(filePath: string, content: string): Promise<void> {
+  const token = process.env.GITHUB_CONTENT_TOKEN;
+  const repository = process.env.GITHUB_REPOSITORY;
+  const branch = process.env.GITHUB_BRANCH ?? "main";
+  if (!token || !repository) throw new Error("GitHub content storage is not configured.");
+
+  const apiUrl = `https://api.github.com/repos/${repository}/contents/${filePath}`;
+  const headers = {
+    Accept: "application/vnd.github+json",
+    Authorization: `Bearer ${token}`,
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+  let sha: string | undefined;
+  const existing = await fetch(`${apiUrl}?ref=${encodeURIComponent(branch)}`, { headers, cache: "no-store" });
+  if (existing.ok) {
+    const existingFile = await existing.json() as { sha?: string };
+    sha = existingFile.sha;
+  } else if (existing.status !== 404) {
+    throw new Error("Could not check the existing GitHub post.");
+  }
+
+  const response = await fetch(apiUrl, {
+    method: "PUT",
+    headers: { ...headers, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message: `Update post: ${path.basename(filePath, ".md")}`,
+      content: Buffer.from(content, "utf8").toString("base64"),
+      branch,
+      ...(sha ? { sha } : {}),
+    }),
+  });
+  if (!response.ok) throw new Error("Could not save the post to GitHub.");
+}
+
 export async function POST(request: Request) {
   const contentLength = Number(request.headers.get("content-length") ?? "0");
   if (contentLength > 110_000) return NextResponse.json({ error: "Request is too large." }, { status: 413 });
+
+  const sessionToken = (await cookies()).get(ADMIN_SESSION_COOKIE)?.value ?? "";
+  const authenticatedAdmin = verifyAdminSessionToken(sessionToken);
   const expectedToken = process.env.PUBLISH_TOKEN;
-  if (!expectedToken || expectedToken.length < 24) return NextResponse.json({ error: "Publishing is not configured on this server." }, { status: 503 });
   const providedToken = request.headers.get("x-publish-token") ?? "";
-  if (!matchesToken(providedToken, expectedToken)) return NextResponse.json({ error: "Invalid publishing token." }, { status: 401 });
+  const validToken = Boolean(expectedToken && expectedToken.length >= 24 && matchesToken(providedToken, expectedToken));
+  if (!authenticatedAdmin && !validToken) {
+    if (!expectedToken || expectedToken.length < 24) return NextResponse.json({ error: "Publishing is not configured on this server." }, { status: 503 });
+    return NextResponse.json({ error: "Your admin session has expired. Please sign in again." }, { status: 401 });
+  }
 
   let body: PublishInput;
   try { body = await request.json() as PublishInput; }
@@ -64,10 +106,15 @@ export async function POST(request: Request) {
   };
   const filePath = path.join(postDirectory, `${slug}.md`);
   try {
-    await mkdir(postDirectory, { recursive: true });
-    await writeFile(filePath, stringify(content, frontmatter), { encoding: "utf8", mode: 0o600 });
+    const markdown = stringify(content, frontmatter);
+    if (process.env.GITHUB_CONTENT_TOKEN && process.env.GITHUB_REPOSITORY) {
+      await saveToGitHub(`content/posts/${slug}.md`, markdown);
+    } else {
+      await mkdir(postDirectory, { recursive: true });
+      await writeFile(filePath, markdown, { encoding: "utf8", mode: 0o600 });
+    }
   } catch {
-    return NextResponse.json({ error: "Could not write the markdown file. Check server storage permissions." }, { status: 500 });
+    return NextResponse.json({ error: "Could not save the post. Check the GitHub content settings or server storage permissions." }, { status: 500 });
   }
   revalidatePath("/");
   revalidatePath("/blog");
