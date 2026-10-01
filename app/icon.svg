@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="EarnPouch icon">
+  <defs>
+    <linearGradient id="earnpouch-gradient" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e" />
+      <stop offset="100%" stop-color="#14b8a6" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="#071b2c" />
+  <circle cx="64" cy="64" r="38" fill="url(#earnpouch-gradient)" />
+  <path d="M79 47H54c-8.9 0-16 7.1-16 16v5c0 8.9 7.1 16 16 16h19c4.4 0 8 3.6 8 8s-3.6 8-8 8H46" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M72 36l12 12-12 12" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
