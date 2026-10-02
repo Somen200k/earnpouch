@@ -33,8 +33,6 @@ Reward and survey offers are often described as available in the United States, 
 
 Eligibility can differ between providers and even between campaigns on the same site. Use the exact offer page as the source of truth rather than relying on an old review, search snippet, or another person's experience.
 
-If a campaign begins with a ZIP-code form, see our guide to [why reward offers ask for your ZIP code](/blog/why-reward-offers-ask-for-zip-code) before deciding whether to share it.
-
 ## How to verify state availability
 
 ### Read the full eligibility section
