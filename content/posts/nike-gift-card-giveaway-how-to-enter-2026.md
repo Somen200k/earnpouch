@@ -10,7 +10,7 @@ tags:
   - Nike gift card
   - gift card promotion
   - US rewards
-published: false
+published: true
 quickPick:
   name: "Want to see if you can enter the Nike gift card promotion?"
   bonus: "Chance to win; see official offer terms"
