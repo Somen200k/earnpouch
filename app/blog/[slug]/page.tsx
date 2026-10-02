@@ -44,15 +44,26 @@ export default async function BlogPostPage({ params }: PageProps) {
     .map(({ post: relatedPost }) => relatedPost);
   const html = await renderMarkdown(post.content);
   const schemas = [
-    { "@context": "https://schema.org", "@type": "Review", name: post.title, reviewBody: post.excerpt, datePublished: post.date, author: { "@type": "Organization", name: "EarnPouch Editorial Team" }, itemReviewed: { "@type": "Product", name: post.quickPick?.name ?? post.title }, ...(typeof post.quickPick?.rating === "number" ? { reviewRating: { "@type": "Rating", ratingValue: post.quickPick.rating, bestRating: 5, worstRating: 1 } } : {}), url: `https://www.earnpouch.com/blog/${post.slug}` },
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.date,
+      author: { "@type": "Organization", name: "EarnPouch Editorial Team" },
+      publisher: { "@type": "Organization", name: "EarnPouch" },
+      mainEntityOfPage: `https://www.earnpouch.com/blog/${post.slug}`,
+      ...(post.coverImage ? { image: [post.coverImage] } : {}),
+    },
     ...(post.faqs.length ? [{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: post.faqs.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })) }] : []),
   ];
 
   return <main className="pb-24 md:pb-0">{schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />)}
     <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12"><Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-blue-700"><ArrowLeft size={15} /> All guides</Link>
       <div className="mx-auto mt-8 max-w-4xl"><div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold uppercase tracking-[0.12em] text-blue-700"><span>{post.category}</span><span className="h-1 w-1 rounded-full bg-slate-400" /><span className="inline-flex items-center gap-1.5 font-medium normal-case tracking-normal text-slate-500"><CalendarDays size={14} />{new Date(`${post.date}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span></div>
-        <h1 className="editorial-serif mt-4 max-w-4xl text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">{post.title}</h1><p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{post.excerpt}</p>{post.coverImage && <Image src={post.coverImage} alt="" width={1600} height={900} priority className="mt-8 max-h-[480px] w-full bg-slate-100 object-cover" />}
-        <p className="mt-4 text-[11px] text-slate-500">Sponsored links may earn us a commission.</p><div className="mt-8"><QuickPickHero post={post} /></div>
+        <h1 className="editorial-serif mt-4 max-w-4xl text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">{post.title}</h1><p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{post.excerpt}</p>
+        <div className="mt-6"><QuickPickHero post={post} /></div>
+        {post.coverImage && <Image src={post.coverImage} alt="" width={1600} height={900} priority className="mt-8 max-h-[480px] w-full bg-slate-100 object-cover" />}
         <div className="article-content prose prose-slate mt-10 max-w-none prose-headings:font-semibold prose-p:leading-7 prose-li:leading-7 prose-a:font-semibold prose-a:underline-offset-4 prose-blockquote:border-emerald-500 prose-blockquote:text-slate-600" dangerouslySetInnerHTML={{ __html: html }} />
         <script dangerouslySetInnerHTML={{ __html: "(function(s){s.dataset.zone='11932119',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))" }} />
         {post.comparison.length > 0 && <section className="mt-10"><h2 className="editorial-serif text-3xl">Compare the options</h2><p className="mt-2 text-sm text-slate-600">Terms are subject to change. Confirm details on each provider&apos;s website.</p><ComparisonTable entries={post.comparison} /></section>}
