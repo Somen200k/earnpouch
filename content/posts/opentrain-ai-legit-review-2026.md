@@ -12,15 +12,15 @@ tags:
   - online safety
 published: true
 quickPick:
-  name: "Separate option: review a research-panel offer"
+  name: "Looking for flexible online opportunities?"
   bonus: "Varies by offer"
   cashoutMin: "Check provider terms"
   payoutMethod: "Confirm with provider"
-  ctaLabel: "View separate offer"
+  ctaLabel: "Check offer availability"
   features:
-    - "This is separate from OpenTrain AI"
-    - "Check whether the offer accepts your location"
-    - "Review all terms before submitting details"
+    - "Explore a research-panel opportunity"
+    - "See current availability and next steps"
+    - "Decide whether it fits your interests"
 faqs:
   - question: "Is OpenTrain AI the same as OpenAI?"
     answer: "Do not assume that similarly spelled names refer to the same organization. Verify the exact website address, company identity, and official documentation before creating an account."

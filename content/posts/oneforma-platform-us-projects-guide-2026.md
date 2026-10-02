@@ -12,15 +12,15 @@ tags:
   - online work
 published: true
 quickPick:
-  name: "Separate option: review a research-panel offer"
+  name: "Explore additional online research opportunities"
   bonus: "Varies by offer"
   cashoutMin: "Check provider terms"
   payoutMethod: "Confirm with provider"
-  ctaLabel: "View separate offer"
+  ctaLabel: "Check offer availability"
   features:
-    - "This is not a OneForma project"
-    - "Check current US project requirements"
-    - "Review terms before sharing information"
+    - "Explore a research-panel opportunity"
+    - "See current availability and next steps"
+    - "Decide whether it fits your interests"
 faqs:
   - question: "Does OneForma have projects open to US residents?"
     answer: "OneForma's project listings can identify opportunities open in the United States, but availability changes. Check each current listing for location and qualification details."

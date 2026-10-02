@@ -32,7 +32,7 @@ export function QuickPickHero({ post }: { post: Post }) {
       </div>
       <h2 className="editorial-serif mt-4 text-2xl leading-tight text-slate-950 sm:text-3xl">{pick.name}</h2>
       <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
-        Interested? Check the current requirements and see whether this third-party offer is available to you.
+        Curious what is available? Explore the provider&apos;s current opportunity and see the next steps.
       </p>
       <ul className="mt-5 grid gap-3 sm:grid-cols-3">
         {pick.features.slice(0, 3).map((feature) => (

@@ -12,15 +12,15 @@ tags:
   - online rewards
 published: true
 quickPick:
-  name: "Separate option: review a research-panel offer"
+  name: "Want to explore another survey option?"
   bonus: "Varies by offer"
   cashoutMin: "Check provider terms"
   payoutMethod: "Confirm with provider"
-  ctaLabel: "View separate offer"
+  ctaLabel: "Check offer availability"
   features:
-    - "This is a different third-party option"
-    - "Check the host app's reward rules"
-    - "Review privacy and eligibility first"
+    - "Explore a research-panel opportunity"
+    - "See current availability and next steps"
+    - "Decide whether it fits your interests"
 faqs:
   - question: "Is CPX Research the same as a reward app?"
     answer: "CPX Research can appear as a survey provider within another website or app. The host service may set how survey participation connects to its own points, balance, or rewards."

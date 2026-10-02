@@ -12,15 +12,15 @@ tags:
   - online work
 published: true
 quickPick:
-  name: "Separate option: review a research-panel offer"
+  name: "Explore more online task opportunities"
   bonus: "Varies by offer"
   cashoutMin: "Check provider terms"
   payoutMethod: "Confirm with provider"
-  ctaLabel: "View separate offer"
+  ctaLabel: "Check offer availability"
   features:
-    - "This is not Amazon Mechanical Turk"
-    - "Check country and state eligibility"
-    - "Review provider terms before continuing"
+    - "Explore a research-panel opportunity"
+    - "See current availability and next steps"
+    - "Decide whether it fits your interests"
 faqs:
   - question: "Is Amazon Mechanical Turk a regular job?"
     answer: "MTurk is a task marketplace, not a promise of scheduled employment. Task availability, requirements, review, and payment are controlled by the marketplace and individual requesters."
