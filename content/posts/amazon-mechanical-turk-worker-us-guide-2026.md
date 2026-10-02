@@ -3,6 +3,7 @@ title: "Amazon Mechanical Turk: A US Worker Guide to Tasks and Requirements"
 category: Remote Work
 date: "2026-10-02"
 excerpt: "Learn how Amazon Mechanical Turk works for workers, what to review before registering, and how task availability, approval, and payment depend on current Amazon terms. A separate research-panel offer is also linked below."
+coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80"
 primaryCpaUrl: "https://40a06.bemobtrcks.com/go/599bb863-0663-4bfe-96de-28b8a198644f"
 tags:
   - Amazon Mechanical Turk

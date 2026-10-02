@@ -3,6 +3,7 @@ title: "How to Check If a Reward Offer Is Available in Your State"
 category: Reward Apps
 date: "2026-10-02"
 excerpt: "Use this checklist to verify a reward or survey offer's US state eligibility, device rules, and next steps before sharing your email or ZIP code."
+coverImage: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80"
 primaryCpaUrl: "https://40a06.bemobtrcks.com/go/599bb863-0663-4bfe-96de-28b8a198644f"
 tags:
   - reward offer eligibility

@@ -3,6 +3,7 @@ title: "CPX Surveys Explained: What Users Should Know Before Starting"
 category: Reward Apps
 date: "2026-10-02"
 excerpt: "Learn what CPX Research surveys may look like inside a partner app, how screening and reward terms can differ, and what to check before sharing information. A separate research-panel offer is also linked below."
+coverImage: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80"
 primaryCpaUrl: "https://40a06.bemobtrcks.com/go/599bb863-0663-4bfe-96de-28b8a198644f"
 tags:
   - CPX Research

@@ -3,6 +3,7 @@ title: "Is OpenTrain AI Legit? What to Check Before Signing Up"
 category: Remote Work
 date: "2026-10-02"
 excerpt: "Searching for OpenTrain AI reviews? Use this practical checklist to verify the exact site, understand its terms, and avoid confusing a name or search result with proof of legitimacy. A separate research-panel offer is also linked below."
+coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80"
 primaryCpaUrl: "https://40a06.bemobtrcks.com/go/599bb863-0663-4bfe-96de-28b8a198644f"
 tags:
   - OpenTrain AI

@@ -3,6 +3,7 @@ title: "OneForma Platform Review: US Projects, Work Types, and What to Check"
 category: Remote Work
 date: "2026-10-02"
 excerpt: "A practical guide to OneForma project work for US readers: how to assess current listings, eligibility, task requirements, and payment terms. A separate research-panel offer is also linked below."
+coverImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
 primaryCpaUrl: "https://40a06.bemobtrcks.com/go/599bb863-0663-4bfe-96de-28b8a198644f"
 tags:
   - OneForma
