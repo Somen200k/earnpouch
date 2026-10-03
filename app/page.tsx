@@ -9,7 +9,7 @@ export default function Home() {
   const categories = settings.categories.map((category, index) => ({ ...category, number: String(index + 1).padStart(2, "0") }));
   const allPosts = listPosts();
   const posts = allPosts.slice(0, 3);
-  const featured = allPosts.find((post) => post.slug === "nike-gift-card-giveaway-how-to-enter-2026") ?? posts[0];
+  const featured = posts[0];
   const featuredImage = featured?.coverImage ?? "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1400&q=85";
 
   return <main>
@@ -35,7 +35,7 @@ export default function Home() {
           </div>
           <Link href={featured ? `/blog/${featured.slug}` : "/blog"} aria-label={featured ? `Read ${featured.title}` : "Browse EarnPouch guides"} className="group relative col-start-2 row-start-1 min-h-[174px] overflow-hidden border-l-[3px] border-emerald-600 bg-slate-300 sm:row-span-2 sm:min-h-[400px] sm:border-l-4 lg:hidden">
             <Image src={featuredImage} alt="" fill priority sizes="(max-width: 640px) 42vw, (max-width: 1024px) 40vw, 42vw" className="object-cover transition duration-700 group-hover:scale-[1.03]" />
-            <div className="absolute bottom-2 left-2 right-2 border border-white/70 bg-white/95 p-2 shadow-lg sm:bottom-4 sm:left-4 sm:right-4 sm:p-4 lg:hidden"><span className="block text-[8px] font-bold uppercase tracking-[0.1em] text-emerald-700 sm:text-[10px]">Editor&apos;s starting point</span><span className="mt-1 inline-flex items-center gap-1 text-[10px] font-semibold text-blue-700 sm:mt-2 sm:text-sm">Read the guide <ArrowRight size={12} /></span></div>
+            <div className="absolute bottom-2 left-2 right-2 border border-white/70 bg-white/95 p-2 shadow-lg sm:bottom-4 sm:left-4 sm:right-4 sm:p-4 lg:hidden"><span className="block text-[8px] font-bold uppercase tracking-[0.1em] text-emerald-700 sm:text-[10px]">Editor&apos;s starting point</span><span className="editorial-serif mt-1 line-clamp-2 block text-xs leading-tight text-slate-950 sm:text-lg">{featured?.title}</span><span className="mt-1 inline-flex items-center gap-1 text-[10px] font-semibold text-blue-700 sm:mt-2 sm:text-sm">Read the guide <ArrowRight size={12} /></span></div>
           </Link>
           <div className="col-span-2 col-start-1 row-start-2 max-w-xl sm:col-span-1 sm:row-start-2">
             <p className="max-w-lg text-sm leading-6 text-slate-700 sm:text-lg sm:leading-8">{settings.heroSubtitle}</p>
