@@ -12,15 +12,20 @@ tags:
   - online work
 published: true
 quickPick:
-  name: "Explore additional online research opportunities"
-  bonus: "Varies by offer"
-  cashoutMin: "Check provider terms"
-  payoutMethod: "Confirm with provider"
-  ctaLabel: "Check offer availability"
+  name: "Optional: review a $100 PayPal gift-card promotion"
+  bonus: "Chance to win; not a guaranteed reward"
+  cashoutMin: "Not applicable; review promotion terms"
+  payoutMethod: "See the provider's current terms"
+  ctaLabel: "Continue to offer"
+  mobileCtaNotice: "Separate PayPal offer • US • Chance to win"
   features:
-    - "Explore a research-panel opportunity"
-    - "See current availability and next steps"
-    - "Decide whether it fits your interests"
+    - "US offer listing; all devices"
+    - "Offer listing indicates email and ZIP code are requested"
+    - "Chance to win a $100 PayPal gift card"
+  steps:
+    - "Confirm you are eligible in the United States"
+    - "Review the separate offer's live rules and privacy terms"
+    - "Submit the listed email/ZIP details only if you agree"
 faqs:
   - question: "Does OneForma have projects open to US residents?"
     answer: "OneForma's project listings can identify opportunities open in the United States, but availability changes. Check each current listing for location and qualification details."
@@ -70,9 +75,9 @@ No platform overview can guarantee that a specific project is open to you. Listi
 
 Consider whether the work’s schedule, equipment, and stated compensation fit your needs. If you need predictable hours or guaranteed income, project-based work may not be a substitute for regular employment.
 
-## A separate research-panel option
+## Optional $100 PayPal gift-card promotion
 
-EarnPouch also links to a third-party research-panel offer for readers comparing online activities. It is **not OneForma**, not a OneForma listing, and not affiliated with the platform. The separate provider controls eligibility, steps, data handling, and any reward; availability and outcomes are not guaranteed. Review its current terms and privacy notice before submitting information. EarnPouch may earn a commission if you complete a qualifying action.
+This optional tracked offer is separate from OneForma: it is **not a OneForma project**, not a OneForma listing, and not affiliated with the platform. The offer listing describes a chance to win a $100 PayPal gift card for US users on all devices and indicates that an email address and ZIP code are requested. The live provider page controls the actual steps, eligibility, and rules; entry does not guarantee a prize. Review its privacy notice before submitting information. EarnPouch may earn a commission if you complete a qualifying action.
 
 ## Frequently asked questions
 

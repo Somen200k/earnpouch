@@ -12,15 +12,20 @@ tags:
   - online rewards
 published: true
 quickPick:
-  name: "Want to explore another survey option?"
-  bonus: "Varies by offer"
-  cashoutMin: "Check provider terms"
-  payoutMethod: "Confirm with provider"
-  ctaLabel: "Check offer availability"
+  name: "Optional: review a $100 PayPal gift-card promotion"
+  bonus: "Chance to win; not a guaranteed reward"
+  cashoutMin: "Not applicable; review promotion terms"
+  payoutMethod: "See the provider's current terms"
+  ctaLabel: "Continue to offer"
+  mobileCtaNotice: "Separate PayPal offer • US • Chance to win"
   features:
-    - "Explore a research-panel opportunity"
-    - "See current availability and next steps"
-    - "Decide whether it fits your interests"
+    - "US offer listing; all devices"
+    - "Offer listing indicates email and ZIP code are requested"
+    - "Chance to win a $100 PayPal gift card"
+  steps:
+    - "Confirm you are eligible in the United States"
+    - "Review the separate offer's live rules and privacy terms"
+    - "Submit the listed email/ZIP details only if you agree"
 faqs:
   - question: "Is CPX Research the same as a reward app?"
     answer: "CPX Research can appear as a survey provider within another website or app. The host service may set how survey participation connects to its own points, balance, or rewards."
@@ -74,9 +79,9 @@ The name alone cannot verify the specific survey you are seeing. Confirm that th
 
 Be cautious of impersonation pages and unsolicited messages promising unusually large rewards. Never share your account password, bank login, payment-card PIN, or one-time security code in a survey. If a survey’s purpose or data request is unclear, leave it and contact the host service through its official support channel.
 
-## A separate research-panel option
+## Optional $100 PayPal gift-card promotion
 
-EarnPouch links to a third-party research-panel offer for readers who want to compare a different option. It is **not CPX Research**, not a CPX survey, and not affiliated with the service where you may have encountered CPX. The provider controls eligibility, data handling, steps, and any reward. Availability and outcomes are not guaranteed. Review the offer’s current privacy notice and terms before submitting information. EarnPouch may earn a commission if you complete a qualifying action.
+This optional tracked offer is separate from CPX Research: it is **not a CPX survey** and is not affiliated with CPX or the host service where you may have encountered it. The offer listing describes a chance to win a $100 PayPal gift card for US users on all devices and indicates that an email address and ZIP code are requested. The live provider page controls the actual steps, eligibility, and rules; entry does not guarantee a prize. Review its privacy notice before submitting information. EarnPouch may earn a commission if you complete a qualifying action.
 
 ## Frequently asked questions
 

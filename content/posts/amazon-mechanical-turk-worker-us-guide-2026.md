@@ -12,15 +12,20 @@ tags:
   - online work
 published: true
 quickPick:
-  name: "Explore more online task opportunities"
-  bonus: "Varies by offer"
-  cashoutMin: "Check provider terms"
-  payoutMethod: "Confirm with provider"
-  ctaLabel: "Check offer availability"
+  name: "Optional: review a $100 PayPal gift-card promotion"
+  bonus: "Chance to win; not a guaranteed reward"
+  cashoutMin: "Not applicable; review promotion terms"
+  payoutMethod: "See the provider's current terms"
+  ctaLabel: "Continue to offer"
+  mobileCtaNotice: "Separate PayPal offer • US • Chance to win"
   features:
-    - "Explore a research-panel opportunity"
-    - "See current availability and next steps"
-    - "Decide whether it fits your interests"
+    - "US offer listing; all devices"
+    - "Offer listing indicates email and ZIP code are requested"
+    - "Chance to win a $100 PayPal gift card"
+  steps:
+    - "Confirm you are eligible in the United States"
+    - "Review the third-party offer's live rules and privacy terms"
+    - "Submit the listed email/ZIP details only if you agree"
 faqs:
   - question: "Is Amazon Mechanical Turk a regular job?"
     answer: "MTurk is a task marketplace, not a promise of scheduled employment. Task availability, requirements, review, and payment are controlled by the marketplace and individual requesters."
@@ -83,9 +88,9 @@ If a task appears to move you off-platform or requests information unrelated to 
 
 MTurk may be worth researching if you want to compare short online tasks and are comfortable checking requester instructions and platform rules. It may not suit someone who needs predictable hours, guaranteed task volume, or a fixed paycheck. Compare the actual work and net time commitment with other options before deciding.
 
-### Separate research-panel option
+### Optional $100 PayPal gift-card promotion
 
-EarnPouch also links to a third-party research-panel offer for readers comparing different online activities. It is **not Amazon Mechanical Turk**, not endorsed by Amazon, and not a substitute for MTurk. The provider sets its own eligibility, steps, and any reward terms; availability and outcomes are not guaranteed. Read the provider’s current terms and privacy notice before submitting information. EarnPouch may earn a commission if you complete a qualifying action.
+This optional tracked offer is separate from MTurk: it is **not Amazon Mechanical Turk**, not endorsed by Amazon, and not a way to get paid for MTurk tasks. Its listing describes a chance to win a $100 PayPal gift card for US users on all devices and indicates that an email address and ZIP code are requested. The live provider page controls the actual steps, eligibility, and rules; entry does not guarantee a prize. Review its privacy notice before submitting information. EarnPouch may earn a commission if you complete a qualifying action.
 
 ## Frequently asked questions
 

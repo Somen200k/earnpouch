@@ -12,15 +12,20 @@ tags:
   - online rewards
 published: true
 quickPick:
-  name: "Review a third-party research-panel option"
-  bonus: "Varies by offer"
-  cashoutMin: "Check provider terms"
-  payoutMethod: "Confirm with provider"
-  ctaLabel: "Check current requirements"
+  name: "Review a $100 PayPal gift-card promotion"
+  bonus: "Chance to win; not a guaranteed reward"
+  cashoutMin: "Not applicable; review promotion terms"
+  payoutMethod: "See the provider's current terms"
+  ctaLabel: "Continue to offer"
+  mobileCtaNotice: "US offer • Check state eligibility • Chance to win"
   features:
-    - "Check country and state restrictions"
-    - "Use the provider's current eligibility rules"
-    - "Do not assume a reward is guaranteed"
+    - "Listed for US users; verify your state on the live offer"
+    - "Offer listing indicates email and ZIP code are requested"
+    - "Chance to win a $100 PayPal gift card"
+  steps:
+    - "Confirm you are eligible in the United States"
+    - "Check state eligibility and review the offer's live rules"
+    - "Submit the listed email/ZIP details only if you agree"
 faqs:
   - question: "Does a US reward offer accept every state?"
     answer: "Not necessarily. Each provider or campaign can set its own geographic limits. Check the current offer terms for state-specific exclusions."

@@ -12,31 +12,36 @@ tags:
   - US rewards
 published: true
 quickPick:
-  name: "Want to see if you can enter the Nike gift card promotion?"
-  bonus: "Chance to win; see official offer terms"
+  name: "Nike gift card giveaway offer"
+  bonus: "Chance to win; not a guaranteed reward"
   cashoutMin: "Not applicable; review promotion rules"
   payoutMethod: "See official offer terms"
-  ctaLabel: "Check giveaway details"
+  ctaLabel: "Continue to offer"
+  mobileCtaNotice: "Email and ZIP code • Third-party promotion • Chance to win"
   features:
-    - "Review the current entry requirements"
-    - "Check availability for your location"
-    - "See the promotion rules before entering"
+    - "Offer listing indicates email and ZIP code are requested"
+    - "Review eligibility and terms before participating"
+    - "Entry is a chance to win, not a guaranteed gift card"
+  steps:
+    - "Confirm the US campaign is available to you"
+    - "Review the organizer, entry details, and official rules"
+    - "Submit the requested email and ZIP code only if you agree"
 faqs:
   - question: "Is this a guaranteed Nike gift card?"
     answer: "No. The campaign is described as a chance to win. Submitting an entry does not guarantee selection or receipt of a gift card; check the promotion's current official rules."
   - question: "What information does the entry page request?"
-    answer: "The campaign listing describes an email-and-ZIP entry form, but the live page may have additional requirements. Review the provider's terms and privacy information before submitting."
+    answer: "The campaign listing indicates that email and ZIP code are requested, but the live page may have additional requirements. Review the provider's terms and privacy information before submitting."
   - question: "Is this giveaway run by Nike?"
     answer: "EarnPouch links to a third-party campaign and does not represent it as sponsored or endorsed by Nike. Check the official promotion page for the organizer and applicable rules."
 ---
 
-Searching for a **Nike gift card giveaway**? This campaign is listed as a chance to enter using an email-and-ZIP form. If you’re curious, you can check the current entry page to see whether the promotion is available to you and what its rules require.
+Searching for a **Nike gift card giveaway**? The link on this page goes to a third-party promotional offer, not Nike's official website. The offer listing indicates that email and ZIP code are requested and describes a chance to win a Nike gift card. Review the live page and rules to confirm the organizer, eligibility, and complete entry process before deciding whether to continue.
 
-**Important:** This is a chance-to-win promotion, not a guaranteed Nike gift card. Submitting the initial form does not mean you have won or will receive a gift card. Read the current promotion rules on the offer page before entering.
+**Important:** This is not Nike's official website, and entry does not guarantee a Nike gift card. Review the organizer, eligibility, privacy terms, and current rules before participating.
 
 ## How to check the Nike gift card promotion
 
-Use the button below to open the third-party campaign page. Review the organizer, entry period, eligibility, and full rules there. The offer listing describes an email-and-ZIP entry step, but the live campaign page controls the actual requirements and may show additional steps.
+The button opens a third-party offer page. The listing indicates that email and ZIP code are requested, but the live page controls the actual entry requirements and may show additional terms or steps. Review what is requested, the organizer, eligibility, privacy terms, and full rules before continuing.
 
 If the campaign is available and you’re comfortable with its terms, follow the organizer’s instructions. If the page does not clearly explain the rules or how your information will be used, wait until you can verify those details.
 
@@ -46,7 +51,7 @@ Before entering any gift card giveaway, check:
 
 1. **Who runs the promotion.** Find the organizer’s name and contact details. Do not assume a brand name in a promotion title means the brand itself operates it.
 2. **Who may enter.** Confirm age, country, state, and any other eligibility requirements.
-3. **How entry works.** See whether the email-and-ZIP form is the complete entry or whether the rules require additional actions.
+3. **How entry works.** See whether submitting an email and ZIP code completes the entry or whether the rules require additional actions.
 4. **When it ends and how a winner is chosen.** Review the entry period, selection process, notification method, and response deadline.
 5. **What the prize actually is.** Check the stated gift card value, quantity, format, restrictions, and any delivery conditions.
 6. **How your information is handled.** Read the privacy notice and any consent language about email or partner communications.
@@ -81,6 +86,6 @@ The campaign organizer and its rules determine how entrants are contacted. Verif
 
 ## Ready to check the entry details?
 
-If you want to see whether the Nike gift card promotion is currently available, open the offer page and review its eligibility and official rules before deciding whether to enter. **A prize is not guaranteed.**
+If you want to continue, open the third-party offer and review its current entry steps and rules. The listing describes a chance to win, not a guaranteed prize. Check eligibility and privacy terms before submitting information.
 
 This is a third-party promotional link, not a representation that Nike sponsors or endorses this page. EarnPouch may earn a commission if you complete a qualifying action, at no extra cost to you.

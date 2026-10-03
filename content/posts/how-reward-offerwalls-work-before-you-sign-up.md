@@ -12,15 +12,20 @@ tags:
   - offer eligibility
 published: true
 quickPick:
-  name: "Review a third-party research-panel option"
-  bonus: "Varies by offer"
-  cashoutMin: "Check provider terms"
-  payoutMethod: "Confirm with provider"
-  ctaLabel: "Check offer details"
+  name: "Optional: review a $100 PayPal gift-card promotion"
+  bonus: "Chance to win; not a guaranteed reward"
+  cashoutMin: "Not applicable; review promotion terms"
+  payoutMethod: "See the provider's current terms"
+  ctaLabel: "Continue to offer"
+  mobileCtaNotice: "Separate PayPal offer • US • Chance to win"
   features:
-    - "Confirm the offer accepts your location"
-    - "Review every required step before starting"
-    - "Check payout rules with the provider"
+    - "US offer listing; all devices"
+    - "Offer listing indicates email and ZIP code are requested"
+    - "Chance to win; provider's terms control"
+  steps:
+    - "Confirm you are eligible in the United States"
+    - "Review this separate promotion's live steps and terms"
+    - "Submit the listed email/ZIP details only if you agree"
 faqs:
   - question: "What is a reward offerwall?"
     answer: "A reward offerwall is a page or service that lists activities from one or more providers. The provider sets availability, requirements, tracking, and any reward terms."
@@ -72,11 +77,9 @@ Read the privacy notice to learn who receives your information and whether the p
 
 If a reward is advertised, confirm the conditions, minimum thresholds, payout options, exclusions, and timing directly with the provider. Payment methods may differ by campaign and location. Treat a reward as conditional unless the written terms clearly say otherwise.
 
-## Is a research-panel offer right for you?
+## Optional $100 PayPal gift-card promotion
 
-A research panel may suit someone who wants to check available studies or partner activities and is comfortable reviewing the provider's privacy and eligibility terms. It may not be a fit if the requested information or follow-up is not something you want, the offer is unavailable in your area, or the requirements are unclear.
-
-EarnPouch links to a third-party research-panel option below. The provider controls its campaign, eligibility, steps, and any reward; availability and outcomes are not guaranteed. Review its current terms before submitting information. EarnPouch may earn a commission if you complete a qualifying action.
+The optional offer linked here is a specific third-party PayPal gift-card promotion, not a general offerwall signup. Its listing describes a chance to win $100 for US users on all devices and indicates that an email address and ZIP code are requested. The live offer page controls eligibility, the exact steps, and terms; entry does not guarantee a prize. Review the organizer and privacy notice before submitting information. EarnPouch may earn a commission if you complete a qualifying action.
 
 ## A quick pre-signup checklist
 

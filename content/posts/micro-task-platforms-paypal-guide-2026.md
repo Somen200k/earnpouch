@@ -14,6 +14,21 @@ tags:
   - Online Surveys
   - Online Safety
 published: true
+quickPick:
+  name: "Optional: review a $100 PayPal gift-card promotion"
+  bonus: "Chance to win; not a guaranteed reward"
+  cashoutMin: "Not applicable; review promotion terms"
+  payoutMethod: "See the provider's current terms"
+  ctaLabel: "Continue to offer"
+  mobileCtaNotice: "Separate PayPal promotion • US • Chance to win"
+  features:
+    - "Separate from microtask work and platform payouts"
+    - "US offer listing; all devices; email and ZIP code requested"
+    - "Chance to win a $100 PayPal gift card"
+  steps:
+    - "Confirm you are eligible in the United States"
+    - "Review the separate promotion's live steps and rules"
+    - "Submit the requested email and ZIP code only if you agree"
 ---
 Online micro-tasks can include surveys, product feedback, website tests, and short data-review assignments. They may suit people looking for flexible activities in their spare time, but they are not a dependable replacement for a job—and the work, eligibility rules, and payment options differ from one platform to another.
 
@@ -65,11 +80,11 @@ Never pay a registration, training, or “release” fee just to access ordinary
 
 ## A sponsored research-panel option
 
-You can review this third-party research-panel offer to see whether it is currently available in your area:
+This is a separate third-party promotion—not payment for microtask work and not a PayPal account bonus. The offer listing describes a chance to win a $100 PayPal gift card for US users on all devices and indicates that an email address and ZIP code are requested. The live page controls the actual entry steps, eligibility, and rules; a prize is not guaranteed. Review the offer's privacy notice before submitting information.
 
-[Check current panel eligibility](https://40a06.bemobtrcks.com/go/599bb863-0663-4bfe-96de-28b8a198644f)
+[Continue to the PayPal gift-card offer](https://40a06.bemobtrcks.com/go/599bb863-0663-4bfe-96de-28b8a198644f)
 
-This is a sponsored affiliate link. The third-party provider sets eligibility, requirements, payment methods, and any rewards; availability and terms may change. Review the provider's terms and privacy policy before submitting information. A PayPal payout is not guaranteed by this article.
+This is a sponsored affiliate link. The provider sets eligibility, requirements, and prize terms; availability may change. EarnPouch may earn a commission if you complete a qualifying action, at no extra cost to you.
 
 ## The bottom line
 

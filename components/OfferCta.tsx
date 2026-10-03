@@ -3,24 +3,34 @@ import { ArrowUpRight } from "lucide-react";
 import type { Post } from "@/lib/posts";
 
 export function OfferCta({ post, secondary = false }: { post: Post; secondary?: boolean }) {
-  const label = post.quickPick?.ctaLabel?.trim() || "Check offer availability";
+  const label = post.quickPick?.ctaLabel?.trim() || "Continue to offer";
+  const isNikePost = post.slug === "nike-gift-card-giveaway-how-to-enter-2026";
+  const notice = isNikePost
+    ? "Independent promotion. Not sponsored by or affiliated with Nike. Review eligibility and entry details on the offer page; entry does not guarantee a prize."
+    : "Independent third-party promotion. Not an official offer from or endorsement by the brand shown. Review eligibility, entry steps, and official rules on the offer page; entry does not guarantee a prize.";
 
   return (
     <aside className={`relative overflow-hidden rounded-xl border border-emerald-200 bg-white p-5 shadow-[0_8px_24px_rgba(15,23,42,0.07)] sm:p-6 ${secondary ? "mt-12" : ""}`} aria-label={secondary ? "Continue to the offer" : "Featured offer action"}>
       <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-emerald-400 to-sky-500" aria-hidden="true" />
-      <div className="pl-2 sm:flex sm:items-center sm:justify-between sm:gap-8">
+      <div className="grid gap-5 pl-2 sm:grid-cols-[minmax(0,1fr)_minmax(14rem,auto)] sm:items-start sm:gap-8">
         <div>
           <p className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-emerald-800">
             {secondary ? "Ready to take a look?" : "Your next step"}
           </p>
           <h3 className="editorial-serif mt-1 text-xl font-semibold leading-tight text-slate-950 sm:text-2xl">
-            {secondary ? "Check the current offer details" : "See if this offer is available to you"}
+            {isNikePost
+              ? "Complete all the steps to see if this offer is available to you"
+              : secondary
+                ? "Check the current offer details"
+                : "See if this offer is available to you"}
           </h3>
           <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
-            Review the provider&apos;s requirements, eligibility, and payout details before deciding whether to continue.
+            {isNikePost
+              ? "Complete all steps accurately on the third-party website to see whether this offer is available to you."
+              : "Continue to the provider's offer page to review the current requirements and complete the listed action if you choose."}
           </p>
         </div>
-        <div className="mt-5 shrink-0 sm:mt-0">
+        <div className="flex flex-col items-stretch sm:items-end">
           {post.primaryCpaUrl ? (
             <Link
               href={post.primaryCpaUrl}
@@ -36,11 +46,9 @@ export function OfferCta({ post, secondary = false }: { post: Post; secondary?: 
               Offer link not configured
             </span>
           )}
+          <p className="mt-2 max-w-xl text-right text-xs leading-5 text-slate-500 sm:max-w-sm">{notice}</p>
         </div>
       </div>
-      <p className="mt-4 border-t border-slate-100 pt-3 pl-2 text-[11px] leading-5 text-slate-500">
-        Partner link. EarnPouch may earn a commission if you complete a qualifying offer, at no extra cost to you.
-      </p>
     </aside>
   );
 }

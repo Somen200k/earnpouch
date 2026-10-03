@@ -12,7 +12,7 @@ const pinnedPostOrder = new Map([
 export type PostCategory = (typeof categories)[number];
 export type PostFaq = { question: string; answer: string };
 export type ComparisonEntry = { name: string; bonus: string; cashoutMin: string; payoutMethod: string; url?: string };
-export type QuickPick = { name: string; rating?: number; reviewCount?: number; bonus: string; cashoutMin: string; payoutMethod: string; features: string[]; ctaLabel?: string };
+export type QuickPick = { name: string; rating?: number; reviewCount?: number; bonus: string; cashoutMin: string; payoutMethod: string; features: string[]; steps?: string[]; ctaLabel?: string; mobileCtaNotice?: string };
 export type Post = { slug: string; title: string; category: PostCategory; date: string; excerpt: string; coverImage?: string; primaryCpaUrl?: string; tags: string[]; published: boolean; content: string; faqs: PostFaq[]; quickPick?: QuickPick; comparison: ComparisonEntry[] };
 
 function isCategory(value: unknown): value is PostCategory { return typeof value === "string" && categories.includes(value as PostCategory); }

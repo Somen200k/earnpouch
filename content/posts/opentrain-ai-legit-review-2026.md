@@ -12,15 +12,20 @@ tags:
   - online safety
 published: true
 quickPick:
-  name: "Looking for flexible online opportunities?"
-  bonus: "Varies by offer"
-  cashoutMin: "Check provider terms"
-  payoutMethod: "Confirm with provider"
-  ctaLabel: "Check offer availability"
+  name: "Optional: review a $100 PayPal gift-card promotion"
+  bonus: "Chance to win; not a guaranteed reward"
+  cashoutMin: "Not applicable; review promotion terms"
+  payoutMethod: "See the provider's current terms"
+  ctaLabel: "Continue to offer"
+  mobileCtaNotice: "Separate PayPal offer • US • Chance to win"
   features:
-    - "Explore a research-panel opportunity"
-    - "See current availability and next steps"
-    - "Decide whether it fits your interests"
+    - "US offer listing; all devices"
+    - "Offer listing indicates email and ZIP code are requested"
+    - "Chance to win a $100 PayPal gift card"
+  steps:
+    - "Confirm you are eligible in the United States"
+    - "Review the separate offer's live rules and privacy terms"
+    - "Submit the listed email/ZIP details only if you agree"
 faqs:
   - question: "Is OpenTrain AI the same as OpenAI?"
     answer: "Do not assume that similarly spelled names refer to the same organization. Verify the exact website address, company identity, and official documentation before creating an account."
@@ -80,9 +85,9 @@ Reviews can help surface questions, but a few testimonials do not prove that a p
 
 Compare user reports with the platform’s own current terms. Treat both unusually glowing claims and dramatic complaints cautiously if they lack details you can verify.
 
-## A separate research-panel option
+## Optional $100 PayPal gift-card promotion
 
-EarnPouch also links to a third-party research-panel offer for readers who want to explore a different option. It is **not OpenTrain AI**, does not establish anything about OpenTrain AI, and may have its own eligibility checks or additional steps. The provider sets availability and terms; a reward is not guaranteed. Review its privacy notice and requirements before submitting information. EarnPouch may earn a commission if you complete a qualifying action.
+This optional tracked offer is separate from OpenTrain AI: it is **not OpenTrain AI**, does not establish anything about the service, and is not affiliated with it. The offer listing describes a chance to win a $100 PayPal gift card for US users on all devices and indicates that an email address and ZIP code are requested. The live provider page controls the actual steps, eligibility, and rules; entry does not guarantee a prize. Review its privacy notice before submitting information. EarnPouch may earn a commission if you complete a qualifying action.
 
 ## Frequently asked questions
 
