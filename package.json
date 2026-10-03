@@ -13,6 +13,7 @@
     "lucide-react": "^1.49.0",
     "marked": "^18.0.14",
     "next": "15.5.27",
+    "nodemailer": "^10.0.13",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "sanitize-html": "^2.18.0"
@@ -22,6 +23,7 @@
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^20",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.16.2",
