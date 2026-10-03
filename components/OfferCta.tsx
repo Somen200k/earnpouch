@@ -4,10 +4,8 @@ import type { Post } from "@/lib/posts";
 
 export function OfferCta({ post, secondary = false }: { post: Post; secondary?: boolean }) {
   const label = post.quickPick?.ctaLabel?.trim() || "Continue to offer";
-  const isNikePost = post.slug === "nike-gift-card-giveaway-how-to-enter-2026";
-  const notice = isNikePost
-    ? "Independent promotion. Not sponsored by or affiliated with Nike. Review eligibility and entry details on the offer page; entry does not guarantee a prize."
-    : "Independent third-party promotion. Not an official offer from or endorsement by the brand shown. Review eligibility, entry steps, and official rules on the offer page; entry does not guarantee a prize.";
+  const notice = post.quickPick?.disclaimer?.trim()
+    || "Independent third-party promotion. Not an official offer from or endorsement by the brand shown. Review eligibility, entry steps, and official rules on the offer page before continuing.";
 
   return (
     <aside className={`relative overflow-hidden rounded-xl border border-emerald-200 bg-white p-5 shadow-[0_8px_24px_rgba(15,23,42,0.07)] sm:p-6 ${secondary ? "mt-12" : ""}`} aria-label={secondary ? "Continue to the offer" : "Featured offer action"}>
@@ -18,16 +16,12 @@ export function OfferCta({ post, secondary = false }: { post: Post; secondary?: 
             {secondary ? "Ready to take a look?" : "Your next step"}
           </p>
           <h3 className="editorial-serif mt-1 text-xl font-semibold leading-tight text-slate-950 sm:text-2xl">
-            {isNikePost
-              ? "Complete all the steps to see if this offer is available to you"
-              : secondary
-                ? "Check the current offer details"
-                : "See if this offer is available to you"}
+            {post.quickPick?.nextStepTitle?.trim()
+              || (secondary ? "Check the current offer details" : "See if this offer is available to you")}
           </h3>
           <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
-            {isNikePost
-              ? "Complete all steps accurately on the third-party website to see whether this offer is available to you."
-              : "Continue to the provider's offer page to review the current requirements and complete the listed action if you choose."}
+            {post.quickPick?.nextStepDescription?.trim()
+              || "Continue to the provider's offer page to review the current requirements and complete the listed action if you choose."}
           </p>
         </div>
         <div className="flex flex-col items-stretch sm:items-end">

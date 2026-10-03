@@ -6,6 +6,15 @@ import { toSlug } from "@/lib/slug";
 
 const categories = ["Reward Apps", "Side Hustles", "Smart Budgeting", "Remote Work"] as const;
 type Tab = "Blog" | "SEO" | "Settings";
+type QuickPickDraft = {
+	name: string;
+	bonus: string;
+	steps: string;
+	ctaLabel: string;
+	nextStepTitle: string;
+	nextStepDescription: string;
+	disclaimer: string;
+};
 type Draft = {
 	title: string;
 	slug: string;
@@ -17,6 +26,7 @@ type Draft = {
 	primaryCpaUrl: string;
 	content: string;
 	published: boolean;
+	quickPick: QuickPickDraft;
 };
 type ExistingPost = { slug: string; title: string };
 
@@ -43,6 +53,15 @@ const initialDraft: Draft = {
 	primaryCpaUrl: "",
 	content: "",
 	published: false,
+	quickPick: {
+		name: "",
+		bonus: "",
+		steps: "",
+		ctaLabel: "",
+		nextStepTitle: "",
+		nextStepDescription: "",
+		disclaimer: "",
+	},
 };
 
 const initialSiteSettings: SiteSettingsState = {
@@ -113,6 +132,10 @@ export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local fi
 		}));
 	}
 
+	function updateQuickPick<K extends keyof QuickPickDraft>(field: K, value: QuickPickDraft[K]) {
+		setDraft((current) => ({ ...current, quickPick: { ...current.quickPick, [field]: value } }));
+	}
+
 	function updateSlug(event: ChangeEvent<HTMLInputElement>) {
 		setSlugEdited(true);
 		update("slug", toSlug(event.target.value));
@@ -127,7 +150,11 @@ export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local fi
 		setSelectedPostLoading(true);
 		try {
 			const response = await fetch(`/api/admin/posts?slug=${encodeURIComponent(slug)}`);
-			const result = await response.json() as Partial<Draft> & { tags?: string[]; error?: string };
+			const result = await response.json() as Partial<Draft> & {
+				tags?: string[];
+				quickPick?: Partial<Omit<QuickPickDraft, "steps">> & { steps?: string[] };
+				error?: string;
+			};
 			if (!response.ok) throw new Error(result.error ?? "Unable to load this post.");
 			setDraft({
 				title: result.title ?? "",
@@ -140,6 +167,15 @@ export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local fi
 				primaryCpaUrl: result.primaryCpaUrl ?? "",
 				content: result.content ?? "",
 				published: result.published === true,
+				quickPick: {
+					name: result.quickPick?.name ?? "",
+					bonus: result.quickPick?.bonus ?? "",
+					steps: result.quickPick?.steps?.join("\n") ?? "",
+					ctaLabel: result.quickPick?.ctaLabel ?? "",
+					nextStepTitle: result.quickPick?.nextStepTitle ?? "",
+					nextStepDescription: result.quickPick?.nextStepDescription ?? "",
+					disclaimer: result.quickPick?.disclaimer ?? "",
+				},
 			});
 			setSlugEdited(true);
 		} catch (error) {
@@ -171,6 +207,10 @@ export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local fi
 					...draft,
 					existingSlug: selectedPostSlug || undefined,
 					tags: draft.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
+					quickPick: {
+						...draft.quickPick,
+						steps: draft.quickPick.steps.split("\n").map((step) => step.trim()).filter(Boolean),
+					},
 				}),
 			});
 			const result = await response.json() as { error?: string; slug?: string };
@@ -287,6 +327,19 @@ export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local fi
 					<label className={labelClass}>Tags (comma-separated)<input className={inputClass} value={draft.tags} onChange={(event) => update("tags", event.target.value)} /></label>
 					<label className={`${labelClass} sm:col-span-2`}>Primary CPA link / BeMob URL{draft.published && <span className="text-amber-300"> (required to publish)</span>}<input type="url" required={draft.published} className={inputClass} value={draft.primaryCpaUrl} onChange={(event) => update("primaryCpaUrl", event.target.value)} /><span className="mt-1 block text-xs font-normal text-slate-400">Use an approved offer that matches the article and its audience. Published posts show the current offer requirements beside each CTA.</span></label>
 				</div>
+				<fieldset className="space-y-4 rounded border border-slate-800 p-4">
+					<legend className="px-2 text-sm font-semibold text-slate-200">Offer snapshot and CTA (optional)</legend>
+					<p className="text-xs leading-5 text-slate-400">These fields customize the shared article layout. Enter only steps, availability details, and terms confirmed by the offer provider.</p>
+					<div className="grid gap-4 sm:grid-cols-2">
+						<label className={labelClass}>Snapshot headline<input className={inputClass} maxLength={180} value={draft.quickPick.name} onChange={(event) => updateQuickPick("name", event.target.value)} /></label>
+						<label className={labelClass}>Offer summary / qualification note<input className={inputClass} maxLength={180} value={draft.quickPick.bonus} onChange={(event) => updateQuickPick("bonus", event.target.value)} /></label>
+						<label className={`${labelClass} sm:col-span-2`}>Three quick checks (one per line)<textarea className={`${inputClass} min-h-24 resize-y py-3`} maxLength={900} value={draft.quickPick.steps} onChange={(event) => updateQuickPick("steps", event.target.value)} placeholder={"Confirm campaign availability\nReview the current rules\nSubmit requested information only if you agree"} /><span className="mt-1 block text-xs font-normal text-slate-400">The page displays up to three steps. Do not imply a guaranteed reward or unverified requirements.</span></label>
+						<label className={labelClass}>CTA button label<input className={inputClass} maxLength={180} value={draft.quickPick.ctaLabel} onChange={(event) => updateQuickPick("ctaLabel", event.target.value)} placeholder="Continue to offer" /></label>
+						<label className={labelClass}>Next-step heading<input className={inputClass} maxLength={180} value={draft.quickPick.nextStepTitle} onChange={(event) => updateQuickPick("nextStepTitle", event.target.value)} /></label>
+						<label className={`${labelClass} sm:col-span-2`}>Next-step description<textarea className={`${inputClass} min-h-20 resize-y py-3`} maxLength={600} value={draft.quickPick.nextStepDescription} onChange={(event) => updateQuickPick("nextStepDescription", event.target.value)} /></label>
+						<label className={`${labelClass} sm:col-span-2`}>Disclosure below the CTA<textarea className={`${inputClass} min-h-20 resize-y py-3`} maxLength={600} value={draft.quickPick.disclaimer} onChange={(event) => updateQuickPick("disclaimer", event.target.value)} placeholder="Independent third-party promotion. Review eligibility and terms on the offer page." /></label>
+					</div>
+				</fieldset>
 				<label className={labelClass}>Content (Markdown)<textarea className={`${inputClass} min-h-[380px] resize-y py-3 font-mono text-[13px] leading-6`} required minLength={100} maxLength={100000} value={draft.content} onChange={(event) => update("content", event.target.value)} placeholder="## Start with the essentials&#10;&#10;Write useful, specific guidance here..." /><span className="mt-2 block text-xs text-slate-500">{wordCount.toLocaleString()} words</span></label>
 				<div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-800 pt-5"><p className="inline-flex items-center gap-2 text-xs leading-5 text-slate-500"><LockKeyhole size={14} />Signed-in admin session • {storageMode}</p><button type="submit" disabled={saving || selectedPostLoading} className="inline-flex min-h-12 items-center gap-2 rounded bg-amber-400 px-5 text-sm font-extrabold text-slate-950 transition hover:bg-amber-300 disabled:cursor-wait disabled:opacity-60"><Sparkles size={16} />{saving ? "Saving..." : selectedPostLoading ? "Loading post..." : draft.published ? "Publish Post" : "Save Draft"}</button></div>
 				{message && <p role="status" className={`inline-flex items-center gap-2 text-sm ${message.error ? "text-red-300" : "text-emerald-300"}`}>{!message.error && <Check size={16} />}{message.text}</p>}

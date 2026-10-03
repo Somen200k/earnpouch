@@ -69,6 +69,7 @@ export async function GET(request: Request) {
 				excerpt: parsed.data.excerpt ?? "",
 				coverImage: parsed.data.coverImage ?? "",
 				primaryCpaUrl: parsed.data.primaryCpaUrl ?? "",
+				quickPick: parsed.data.quickPick ?? null,
 				tags: Array.isArray(parsed.data.tags) ? parsed.data.tags : [],
 				published: parsed.data.published === true,
 				content: parsed.content,

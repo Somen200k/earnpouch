@@ -18,6 +18,9 @@ quickPick:
   payoutMethod: "See official offer terms"
   ctaLabel: "Continue to offer"
   mobileCtaNotice: "Email and ZIP code • Third-party promotion • Chance to win"
+  nextStepTitle: "Complete all the steps to see if this offer is available to you"
+  nextStepDescription: "Complete all steps accurately on the third-party website to see whether this offer is available to you."
+  disclaimer: "Independent promotion. Not sponsored by or affiliated with Nike. Review eligibility and entry details on the offer page; entry does not guarantee a prize."
   features:
     - "Offer listing indicates email and ZIP code are requested"
     - "Review eligibility and terms before participating"

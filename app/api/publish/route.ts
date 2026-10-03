@@ -14,8 +14,12 @@ export const dynamic = "force-dynamic";
 
 type PublishInput = {
   title?: unknown; slug?: unknown; category?: unknown; date?: unknown; excerpt?: unknown;
-  coverImage?: unknown; primaryCpaUrl?: unknown; tags?: unknown; content?: unknown; published?: unknown; existingSlug?: unknown;
+  coverImage?: unknown; primaryCpaUrl?: unknown; tags?: unknown; content?: unknown; published?: unknown; existingSlug?: unknown; quickPick?: unknown;
 };
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
 
 function isHttpUrl(value: unknown): value is string {
   if (typeof value !== "string" || !value) return false;
@@ -129,6 +133,19 @@ export async function POST(request: Request) {
   const excerpt = typeof body.excerpt === "string" ? body.excerpt.trim() : "";
   const content = typeof body.content === "string" ? body.content : "";
   const tags = Array.isArray(body.tags) ? body.tags.filter((tag): tag is string => typeof tag === "string").map((tag) => tag.trim()).filter(Boolean).slice(0, 20) : [];
+  const quickPickInput = isRecord(body.quickPick) ? body.quickPick : undefined;
+  const quickPickTextFields = ["name", "bonus", "ctaLabel", "nextStepTitle", "nextStepDescription", "disclaimer"] as const;
+  if (quickPickInput) {
+    for (const field of quickPickTextFields) {
+      const value = quickPickInput[field];
+      if (value !== undefined && (typeof value !== "string" || value.length > (field === "disclaimer" || field === "nextStepDescription" ? 600 : 180))) {
+        return NextResponse.json({ error: `Offer ${field} must be text within its length limit.` }, { status: 400 });
+      }
+    }
+    if (quickPickInput.steps !== undefined && (!Array.isArray(quickPickInput.steps) || quickPickInput.steps.length > 3 || quickPickInput.steps.some((step) => typeof step !== "string" || step.length > 300))) {
+      return NextResponse.json({ error: "Offer steps must contain no more than three text items of 300 characters each." }, { status: 400 });
+    }
+  }
 
   if (title.length < 5 || title.length > 160) return NextResponse.json({ error: "Title must be between 5 and 160 characters." }, { status: 400 });
   if (!slug || slug.length > 90 || toSlug(slug) !== slug) return NextResponse.json({ error: "Slug must use lowercase letters, numbers, and single hyphens." }, { status: 400 });
@@ -158,11 +175,24 @@ export async function POST(request: Request) {
   }
 
   const existingFrontmatter = existingSource ? matter(existingSource).data : {};
+  const existingQuickPick = isRecord(existingFrontmatter.quickPick) ? existingFrontmatter.quickPick : {};
+  const quickPickFields: Record<string, string | string[]> = {};
+  if (quickPickInput) {
+    for (const field of quickPickTextFields) {
+      const value = quickPickInput[field];
+      if (typeof value === "string" && value.trim()) quickPickFields[field] = value.trim();
+    }
+    if (Array.isArray(quickPickInput.steps)) {
+      const steps = quickPickInput.steps.filter((step): step is string => typeof step === "string").map((step) => step.trim()).filter(Boolean);
+      if (steps.length) quickPickFields.steps = steps;
+    }
+  }
   const frontmatter = {
     ...existingFrontmatter,
     title, category, date, excerpt,
     ...(typeof body.coverImage === "string" && body.coverImage ? { coverImage: body.coverImage } : {}),
     ...(typeof body.primaryCpaUrl === "string" && body.primaryCpaUrl ? { primaryCpaUrl: body.primaryCpaUrl } : {}),
+    ...(Object.keys(quickPickFields).length ? { quickPick: { ...existingQuickPick, ...quickPickFields } } : {}),
     tags, published: body.published,
   };
   const filePath = path.join(postDirectory, `${slug}.md`);
