@@ -29,7 +29,7 @@ Before recommending a topic or offer, ask whether its planned traffic is broad s
 
 ## Article layout
 
-Use the shared article components and content fields in Admin Content Studio:
+Use the shared article components and content fields in Admin Content Studio. CPA links are optional for informational articles; only add a campaign link when it is relevant, approved, and accurately disclosed.
 
 1. A direct, accurate H1 and short opening that answer the reader's question without claiming an unverified outcome.
 2. A compact offer snapshot and up to three quick checks. Describe confirmed requirements; direct readers to the live terms for details that may change.

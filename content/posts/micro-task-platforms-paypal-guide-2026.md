@@ -1,6 +1,6 @@
 ---
 title: 'How to Find Legitimate Micro-Task Platforms That May Pay via PayPal (2026 Guide)'
-category: Remote Work
+category: Side Hustles
 date: '2026-10-02'
 excerpt: >-
   Learn how online micro-task and research platforms work, what to check before

@@ -157,8 +157,6 @@ export async function POST(request: Request) {
   if (body.coverImage && !isHttpUrl(body.coverImage)) return NextResponse.json({ error: "Cover image must use an HTTPS URL." }, { status: 400 });
   if (body.primaryCpaUrl && !isHttpUrl(body.primaryCpaUrl)) return NextResponse.json({ error: "Primary offer link must use an HTTPS URL." }, { status: 400 });
   if (typeof body.published !== "boolean") return NextResponse.json({ error: "Published must be true or false." }, { status: 400 });
-  if (body.published && (typeof body.primaryCpaUrl !== "string" || !body.primaryCpaUrl.trim())) return NextResponse.json({ error: "Add an approved, relevant CPA offer link before publishing." }, { status: 400 });
-
   let existingSource: string | null = null;
   let destinationSource: string | null = null;
   try {
@@ -175,6 +173,8 @@ export async function POST(request: Request) {
   }
 
   const existingFrontmatter = existingSource ? matter(existingSource).data : {};
+  const { primaryCpaUrl: existingPrimaryCpaUrl, ...existingFrontmatterWithoutOffer } = existingFrontmatter;
+  const primaryCpaUrl = typeof body.primaryCpaUrl === "string" ? body.primaryCpaUrl.trim() : existingPrimaryCpaUrl;
   const existingQuickPick = isRecord(existingFrontmatter.quickPick) ? existingFrontmatter.quickPick : {};
   const quickPickFields: Record<string, string | string[]> = {};
   if (quickPickInput) {
@@ -188,10 +188,10 @@ export async function POST(request: Request) {
     }
   }
   const frontmatter = {
-    ...existingFrontmatter,
+    ...existingFrontmatterWithoutOffer,
     title, category, date, excerpt,
     ...(typeof body.coverImage === "string" && body.coverImage ? { coverImage: body.coverImage } : {}),
-    ...(typeof body.primaryCpaUrl === "string" && body.primaryCpaUrl ? { primaryCpaUrl: body.primaryCpaUrl } : {}),
+    ...(typeof primaryCpaUrl === "string" && primaryCpaUrl ? { primaryCpaUrl } : {}),
     ...(Object.keys(quickPickFields).length ? { quickPick: { ...existingQuickPick, ...quickPickFields } } : {}),
     tags, published: body.published,
   };
