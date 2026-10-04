@@ -6,7 +6,8 @@ import matter, { stringify } from "gray-matter";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { ADMIN_SESSION_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
-import { categories, postDirectory } from "@/lib/posts";
+import { categories } from "@/lib/category-url";
+import { postDirectory } from "@/lib/posts";
 import { toSlug } from "@/lib/slug";
 
 export const runtime = "nodejs";
