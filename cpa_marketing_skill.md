@@ -42,14 +42,24 @@ Avoid fake testimonials, fabricated screenshots, false scarcity, guaranteed priz
 
 These are starting points, not claims of current availability. Verify every step with the actual provider before publishing. Do not use “official” for a third-party portal unless the provider and its role are verified.
 
-### Smart Budgeting: insurance comparison
+### Smart Budgeting: household finance and budgeting
 
-- **Working headline:** How to Compare Local Car Insurance Rates Online
-- **Snapshot:** Local auto insurance comparison
-- **Checks:** Confirm location eligibility; gather vehicle details requested by the provider; compare available quotes and terms.
-- **Next step:** Complete the provider's comparison form to view the options it makes available.
-- **CTA:** Compare rates
-- **Disclosure direction:** State that EarnPouch is an independent publisher and that quote availability and eligibility depend on the provider. Do not call a portal “licensed” or promise free quotes without verification.
+- **Working headline:** How to Compare Budgeting Tools and Plan Monthly Spending
+- **Snapshot:** Budgeting tool or household finance guide
+- **Checks:** Review fees and trial terms; confirm supported accounts and privacy practices; compare features against the reader's needs.
+- **Next step:** Review the provider's current product terms before connecting accounts or starting a trial.
+- **CTA:** Review budgeting tool
+- **Disclosure direction:** Disclose any affiliate relationship and distinguish educational guidance from individualized financial advice.
+
+The current EarnPouch navigation places its existing gift-card giveaway guides in this category at the publisher's direction. That is a site taxonomy choice, not a claim that giveaways are budgeting products. Keep future article copy clear about the promotion's actual subject.
+
+### Reward Apps: app installs and CPI
+
+- **Working topic:** An app-install campaign may ask a user to install a named rewards app and complete an in-app action such as installing a game.
+- **Checks:** Confirm the approved tracking link, supported device and operating system, eligible geography, exact event that qualifies, payout terms, and any deadline from the live network offer.
+- **Next step:** Explain the verified install and in-app steps, without promising that every install will qualify or produce a reward.
+- **CTA:** Use a clear action label that matches the campaign.
+- **Disclosure direction:** Identify the third-party app and disclose that eligibility, attribution, validation, and payment are controlled by the provider and network terms.
 
 ### Side Hustles: market research
 

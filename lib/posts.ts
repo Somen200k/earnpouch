@@ -1,15 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { categories, type PostCategory } from "@/lib/category-url";
 
 export const postDirectory = path.join(process.cwd(), "content", "posts");
-export const categories = ["Reward Apps", "Side Hustles", "Smart Budgeting", "Remote Work"] as const;
 const pinnedPostOrder = new Map([
   "nike-gift-card-giveaway-how-to-enter-2026",
   "claim-cash-app-rewards-guide-2026",
   "free-walmart-gift-cards-guide-2026",
 ].map((slug, index) => [slug, index]));
-export type PostCategory = (typeof categories)[number];
 export type PostFaq = { question: string; answer: string };
 export type ComparisonEntry = { name: string; bonus: string; cashoutMin: string; payoutMethod: string; url?: string };
 export type QuickPick = { name: string; rating?: number; reviewCount?: number; bonus: string; cashoutMin: string; payoutMethod: string; features: string[]; steps?: string[]; ctaLabel?: string; mobileCtaNotice?: string; nextStepTitle?: string; nextStepDescription?: string; disclaimer?: string };

@@ -28,9 +28,9 @@ export const defaultSiteSettings: SiteSettings = {
   description: "Straightforward guides to reward apps, flexible side hustles, smarter budgets, and remote work.",
   navLinks: ["Reward Apps", "Side Hustles", "Smart Budgeting", "Remote Work"],
   categories: [
-    { name: "Reward Apps", description: "Get more from the time you already spend online." },
+    { name: "Reward Apps", description: "Explore app-install and CPI offers. Review each app and game install's requirements, eligibility, and payout terms." },
     { name: "Side Hustles", description: "Flexible ways to put your skills and spare hours to work." },
-    { name: "Smart Budgeting", description: "Simple systems for keeping more of what you earn." },
+    { name: "Smart Budgeting", description: "Gift-card giveaway guides and promotion details. Check eligibility, privacy terms, and official rules before entering." },
     { name: "Remote Work", description: "Find legitimate opportunities beyond the office." },
   ],
   footerText: "Good information for earning, saving, and making the most of your money.",

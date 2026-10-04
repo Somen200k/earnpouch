@@ -73,7 +73,7 @@ const initialSiteSettings: SiteSettingsState = {
 	footerText: "Good information for earning, saving, and making the most of your money.",
 	affiliateNotice: "EarnPouch is reader-supported. We may earn an affiliate commission when you sign up through our links at no extra cost to you.",
 	navLinks: "Reward Apps, Side Hustles, Smart Budgeting, Remote Work",
-	categoriesText: "Reward Apps | Get more from the time you already spend online.\nSide Hustles | Flexible ways to put your skills and spare hours to work.\nSmart Budgeting | Simple systems for keeping more of what you earn.\nRemote Work | Find legitimate opportunities beyond the office.",
+	categoriesText: "Reward Apps | App-install and CPI offers. Check each campaign's install requirements, eligibility, and payout terms.\nSide Hustles | Flexible ways to put your skills and spare hours to work.\nSmart Budgeting | Gift-card giveaway guides and promotion details. Check eligibility, privacy terms, and official rules before entering.\nRemote Work | Find legitimate opportunities beyond the office.",
 };
 
 export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local filesystem" }) {
