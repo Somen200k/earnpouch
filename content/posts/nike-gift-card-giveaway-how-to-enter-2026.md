@@ -1,6 +1,6 @@
 ---
 title: "Nike Gift Card Giveaway: How to Check the Entry Details"
-category: Smart Budgeting
+category: Giveaways & Sweepstakes
 date: "2026-10-02"
 excerpt: "Looking for a Nike gift card giveaway? See how to review this email-and-ZIP entry opportunity, check the current rules, and find out whether you can participate. Entry does not guarantee a gift card."
 coverImage: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=80"

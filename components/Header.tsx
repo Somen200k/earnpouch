@@ -3,11 +3,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { categoryPath } from "@/lib/category-url";
+import { categories, categoryPath } from "@/lib/category-url";
 
 const defaultSettings = {
   siteName: "EarnPouch",
-  navLinks: ["Reward Apps", "Side Hustles", "Smart Budgeting", "Remote Work"],
+  navLinks: [...categories],
 };
 
 export function Header() {

@@ -1,6 +1,6 @@
 ---
 title: "Walmart Gift Card Giveaway: US Android Offer Details"
-category: Smart Budgeting
+category: Giveaways & Sweepstakes
 date: "2026-10-01"
 excerpt: "Review a third-party Walmart gift-card promotion listing a chance to win $1,000. The offer is listed for US Android users and indicates email and ZIP code are requested; entry does not guarantee a gift card."
 coverImage: "https://images.unsplash.com/photo-1578916171728-46686eac8d58?w=1200&auto=format&fit=crop&q=80"

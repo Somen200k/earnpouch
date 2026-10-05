@@ -40,8 +40,13 @@ export function QuickPickHero({ post }: { post: Post }) {
       </p>
       <div className="mt-5 grid gap-5 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:items-center">
         {post.coverImage && (
-          <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
-            <Image src={post.coverImage} alt="" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover" />
+          <div>
+            <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
+              <Image src={post.coverImage} alt="" fill priority sizes="(max-width: 768px) 100vw, 40vw" className="object-cover" />
+            </div>
+            {post.coverImage.includes("images.unsplash.com") && (
+              <p className="mt-1.5 text-xs text-slate-500">Illustrative stock photo; not the promotion or prize.</p>
+            )}
           </div>
         )}
         <div>

@@ -27,6 +27,7 @@ export function OfferCta({ post, secondary = false }: { post: Post; secondary?: 
         <div className="flex flex-col items-stretch sm:items-end">
           {post.primaryCpaUrl ? (
             <Link
+              id={secondary ? "secondary-offer-cta" : "primary-offer-cta"}
               href={post.primaryCpaUrl}
               rel="sponsored nofollow noopener noreferrer"
               target="_blank"
@@ -40,7 +41,7 @@ export function OfferCta({ post, secondary = false }: { post: Post; secondary?: 
               Offer link not configured
             </span>
           )}
-          <p className="mt-2 max-w-xl text-right text-xs leading-5 text-slate-500 sm:max-w-sm">{notice}</p>
+          <p className="mt-2 max-w-xl text-right text-xs leading-5 text-slate-500 sm:max-w-sm">{notice} EarnPouch may earn a commission if you complete a qualifying action.</p>
         </div>
       </div>
     </aside>

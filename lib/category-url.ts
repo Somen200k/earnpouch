@@ -1,4 +1,4 @@
-export const categories = ["Reward Apps", "Side Hustles", "Smart Budgeting", "Remote Work"] as const;
+export const categories = ["Reward Apps", "Side Hustles", "Smart Budgeting", "Remote Work", "Giveaways & Sweepstakes"] as const;
 export type PostCategory = (typeof categories)[number];
 
 export function categorySlug(category: string): string {

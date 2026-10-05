@@ -4,7 +4,7 @@ import { BlogListing } from "@/components/BlogListing";
 import { categories, categoryPath } from "@/lib/category-url";
 import { listPosts } from "@/lib/posts";
 
-export const metadata: Metadata = { title: "All guides", description: "Explore practical guides to reward apps, side hustles, budgeting, and remote work." };
+export const metadata: Metadata = { title: "All guides", description: "Explore practical guides to reward apps, giveaways, side hustles, budgeting, and remote work." };
 
 export default async function BlogIndex({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
   const { category } = await searchParams;

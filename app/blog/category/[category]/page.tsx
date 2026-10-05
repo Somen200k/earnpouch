@@ -13,11 +13,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { category: slug } = await params;
   const category = categoryFromSlug(slug);
-  return category ? {
+  if (!category) return {};
+  const hasPublishedPosts = listPosts().some((post) => post.category === category);
+  return {
     title: `${category} guides`,
     description: `Browse EarnPouch guides in ${category}.`,
     alternates: { canonical: `/blog/category/${slug}` },
-  } : {};
+    ...(hasPublishedPosts ? {} : { robots: { index: false, follow: true } }),
+  };
 }
 
 export default async function CategoryPage({ params }: PageProps) {

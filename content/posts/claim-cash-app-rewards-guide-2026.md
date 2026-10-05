@@ -1,6 +1,6 @@
 ---
 title: "Cash App Gift Card Giveaway: US iPhone Offer Details"
-category: Smart Budgeting
+category: Giveaways & Sweepstakes
 date: "2026-10-01"
 excerpt: "Review a third-party Cash App gift-card promotion listing a chance to win $1,000. The offer is listed for US Apple iOS users and indicates email and ZIP code are requested; entry is not a guaranteed reward."
 coverImage: "https://images.unsplash.com/photo-1554672723-b208dc85134f?w=1200&q=80"
