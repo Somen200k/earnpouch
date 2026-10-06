@@ -4,13 +4,14 @@ import { BlogListing } from "@/components/BlogListing";
 import { categories, categoryPath } from "@/lib/category-url";
 import { listPosts } from "@/lib/posts";
 
-export const metadata: Metadata = { title: "All guides", description: "Explore practical guides to reward apps, giveaways, side hustles, budgeting, and remote work." };
+export const metadata: Metadata = { title: "All guides", description: "Explore practical guides to reward apps, career opportunities, side income, giveaways, and budgeting." };
 
 export default async function BlogIndex({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
   const { category } = await searchParams;
   const allPosts = listPosts();
   if (category) {
-    const matchingCategory = categories.find((item) => item.toLowerCase() === category.toLowerCase());
+    const matchingCategory = categories.find((item) => item.toLowerCase() === category.toLowerCase())
+      ?? (category.toLowerCase() === "side hustles" || category.toLowerCase() === "remote work" ? "Career & Side Income" : undefined);
     if (matchingCategory) redirect(categoryPath(matchingCategory));
   }
   const posts = category ? allPosts.filter((post) => post.category.toLowerCase() === category.toLowerCase()) : allPosts;

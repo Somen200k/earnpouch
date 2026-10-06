@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, CalendarDays } from "lucide-react";
+import { ArticleShare } from "@/components/ArticleShare";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import { MobileOfferBar } from "@/components/MobileOfferBar";
 import { OfferCta } from "@/components/OfferCta";
@@ -71,9 +72,10 @@ export default async function BlogPostPage({ params }: PageProps) {
     <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12"><Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-blue-700"><ArrowLeft size={15} /> All guides</Link>
       <div className="mx-auto mt-8 max-w-4xl"><div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold uppercase tracking-[0.12em] text-blue-700"><Link href={categoryPath(post.category)} className="hover:underline">{post.category}</Link><span className="h-1 w-1 rounded-full bg-slate-400" /><span className="inline-flex items-center gap-1.5 font-medium normal-case tracking-normal text-slate-500"><CalendarDays size={14} />{new Date(`${post.date}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span></div>
         <h1 className="editorial-serif mt-4 max-w-4xl text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">{post.title}</h1>
+        <ArticleShare title={post.title} url={`https://www.earnpouch.com/blog/${post.slug}`} />
         {post.primaryCpaUrl && <div className="mt-6"><QuickPickHero post={post} /></div>}
         {post.content.trim() && (
-          <article className="article-content prose prose-slate mt-8 max-w-none prose-headings:font-semibold prose-p:leading-7 prose-li:leading-7 prose-a:font-semibold prose-a:underline-offset-4 prose-blockquote:border-emerald-500 prose-blockquote:text-slate-600" dangerouslySetInnerHTML={{ __html: html }} />
+          <article className="article-content prose prose-slate mx-auto mt-9 max-w-none rounded-2xl border border-slate-200 bg-white px-6 py-7 shadow-[0_12px_36px_rgba(15,23,42,0.05)] first:prose-p:text-lg first:prose-p:leading-8 first:prose-p:text-slate-700 prose-headings:font-semibold prose-p:leading-8 prose-li:leading-7 prose-a:font-semibold prose-a:underline-offset-4 prose-h2:mt-12 prose-h2:border-l-4 prose-h2:border-emerald-500 prose-h2:pl-4 prose-h2:leading-tight prose-h3:mt-8 prose-blockquote:rounded-r-lg prose-blockquote:bg-emerald-50/70 prose-blockquote:px-5 prose-blockquote:py-2 prose-blockquote:border-emerald-500 prose-blockquote:text-slate-600 prose-img:rounded-xl [&_p]:max-w-[72ch] [&_ul]:max-w-[72ch] [&_ol]:max-w-[72ch] sm:px-10 sm:py-10 lg:px-12 lg:py-12" dangerouslySetInnerHTML={{ __html: html }} />
         )}
         <script dangerouslySetInnerHTML={{ __html: "(function(s){s.dataset.zone='11932119',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))" }} />
         {post.comparison.length > 0 && <section className="mt-10"><h2 className="editorial-serif text-3xl">Compare the options</h2><p className="mt-2 text-sm text-slate-600">Terms are subject to change. Confirm details on each provider&apos;s website.</p><ComparisonTable entries={post.comparison} /></section>}

@@ -72,9 +72,7 @@ export function QuickPickHero({ post }: { post: Post }) {
           )}
         </div>
       </div>
-      <div className="mt-5">
-        <OfferCta post={post} />
-      </div>
+      <OfferCta post={post} compact />
     </section>
   );
 }

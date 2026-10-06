@@ -40,7 +40,9 @@ export function MobileOfferBar({ post }: { post: Post }) {
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold text-slate-900">{title}</p>
           {notice && <p className="mt-0.5 line-clamp-2 text-[10px] leading-4 text-amber-900">{notice}</p>}
-          <p className="mt-0.5 truncate text-[10px] leading-4 text-slate-500">EarnPouch may earn a commission if you complete a qualifying action.</p>
+          <p className="mt-0.5 truncate text-[10px] leading-4 text-slate-400">
+            Affiliate link · <Link href="/affiliate-disclosure" className="underline">disclosure</Link>
+          </p>
         </div>
         <Link
           href={post.primaryCpaUrl}

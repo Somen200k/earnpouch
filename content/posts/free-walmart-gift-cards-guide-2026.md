@@ -89,4 +89,4 @@ The listing indicates that email and ZIP code are requested, but it does not con
 
 Use **Continue to offer** to open the third-party campaign page. Check its current eligibility, entry steps, privacy notice, and rules before deciding whether to continue. The promotion is a chance to win, not a guaranteed gift card.
 
-EarnPouch may earn a commission if you complete a qualifying action, at no extra cost to you. This does not affect the campaign's rules or guarantee a prize.
+EarnPouch may earn a commission if you use this link. [How affiliate links work](/affiliate-disclosure). This does not affect the campaign's rules or guarantee a prize.

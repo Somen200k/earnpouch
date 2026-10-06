@@ -26,13 +26,12 @@ export const defaultSiteSettings: SiteSettings = {
   heroTitle: "Make your money go further.",
   heroSubtitle: "Clear-eyed guides to earning a little extra, finding useful rewards, and making a budget that works in real life.",
   heroBadge: "Practical money guides",
-  description: "Straightforward guides to reward apps, giveaways, side hustles, smarter budgets, and remote work.",
-  navLinks: ["Reward Apps", "Side Hustles", "Smart Budgeting", "Remote Work", "Giveaways & Sweepstakes"],
+  description: "Straightforward guides to reward apps, career opportunities, side income, giveaways, and smarter budgets.",
+  navLinks: ["Reward Apps", "Career & Side Income", "Smart Budgeting", "Giveaways & Sweepstakes"],
   categories: [
     { name: "Reward Apps", description: "Explore app-install and CPI offers. Review each app and game install's requirements, eligibility, and payout terms." },
-    { name: "Side Hustles", description: "Flexible ways to put your skills and spare hours to work." },
+    { name: "Career & Side Income", description: "Explore job-search resources, flexible side hustles, and practical ways to earn extra income." },
     { name: "Smart Budgeting", description: "Practical guidance for planning spending, saving, and making informed money decisions." },
-    { name: "Remote Work", description: "Find legitimate opportunities beyond the office." },
     { name: "Giveaways & Sweepstakes", description: "Review third-party promotions, eligibility, entry requirements, and official rules before participating." },
   ],
   footerText: "Good information for earning, saving, and making the most of your money.",
@@ -46,7 +45,10 @@ function normalizeSettings(data: Partial<SiteSettings> | null | undefined): Site
   return {
     ...settings,
     navLinks: Array.isArray(data?.navLinks)
-      ? [...new Set(data.navLinks.filter((value): value is string => typeof value === "string" && categories.includes(value as (typeof categories)[number])))]
+      ? [...new Set(data.navLinks
+        .filter((value): value is string => typeof value === "string")
+        .map((value) => value === "Side Hustles" || value === "Remote Work" ? "Career & Side Income" : value)
+        .filter((value): value is (typeof categories)[number] => categories.includes(value as (typeof categories)[number])))]
       : defaultSiteSettings.navLinks,
     categories: defaultSiteSettings.categories.map((defaultCategory) => {
       const savedCategory = data?.categories?.find((category) => category?.name === defaultCategory.name);

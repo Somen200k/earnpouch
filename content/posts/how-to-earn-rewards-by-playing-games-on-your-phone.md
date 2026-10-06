@@ -20,7 +20,7 @@ quickPick:
   nextStepTitle: "Enjoy mobile games? See if Playful Rewards is available to you."
   nextStepDescription: "Check the current offer and see whether you're eligible before installing."
   mobileCtaNotice: "United States • Android • Install Playful Rewards and 1 game"
-  disclaimer: "Independent third-party offer. Not an official offer from or endorsement by the app provider. Review eligibility and current requirements on the offer page."
+  disclaimer: "Check the current eligibility and offer requirements before continuing."
   features:
     - "The current offer is listed for eligible users in the United States"
     - "The current offer is listed for Android devices"

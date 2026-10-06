@@ -91,4 +91,4 @@ The campaign organizer and its rules determine how entrants are contacted. Verif
 
 If you want to continue, open the third-party offer and review its current entry steps and rules. The listing describes a chance to win, not a guaranteed prize. Check eligibility and privacy terms before submitting information.
 
-This is a third-party promotional link, not a representation that Nike sponsors or endorses this page. EarnPouch may earn a commission if you complete a qualifying action, at no extra cost to you.
+This third-party promotion is not represented as sponsored or endorsed by Nike. EarnPouch may earn a commission if you use this link. [How affiliate links work](/affiliate-disclosure).

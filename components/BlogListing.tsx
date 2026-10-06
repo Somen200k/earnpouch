@@ -2,15 +2,24 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import type { Post } from "@/lib/posts";
+import { categories, categoryPath } from "@/lib/category-url";
 
 export function BlogListing({ posts, heading, description }: { posts: Post[]; heading: string; description: string }) {
+  const activeCategory = categories.find((category) => category === heading);
   return (
     <main className="mx-auto min-h-[55vh] max-w-7xl px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
-      <p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700">The EarnPouch library</p>
-      <h1 className="editorial-serif mt-3 text-4xl sm:text-5xl">{heading}</h1>
-      <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">{description}</p>
+      <section className="rounded-3xl border border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-sky-50 px-6 py-8 sm:px-10 sm:py-10">
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-800">The EarnPouch library</p>
+        <h1 className="editorial-serif mt-3 text-4xl text-slate-950 sm:text-5xl">{heading}</h1>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">{description}</p>
+        <nav aria-label="Browse guides by category" className="mt-7 flex gap-2 overflow-x-auto pb-1">
+          <Link href="/blog" aria-current={!activeCategory ? "page" : undefined} className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition ${!activeCategory ? "border-emerald-800 bg-emerald-800 text-white" : "border-slate-200 bg-white/80 text-slate-700 hover:border-emerald-300 hover:text-emerald-800"}`}>All guides</Link>
+          {categories.map((category) => <Link key={category} href={categoryPath(category)} aria-current={activeCategory === category ? "page" : undefined} className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition ${activeCategory === category ? "border-emerald-800 bg-emerald-800 text-white" : "border-slate-200 bg-white/80 text-slate-700 hover:border-emerald-300 hover:text-emerald-800"}`}>{category}</Link>)}
+        </nav>
+      </section>
+      <div className="mt-8 flex items-center justify-between border-b border-slate-200 pb-3 text-sm text-slate-500"><span>{posts.length} {posts.length === 1 ? "guide" : "guides"} to explore</span><span className="hidden sm:inline">Practical reads, organized around what matters to you</span></div>
       {posts.length ? (
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <article key={post.slug} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
               <Link href={`/blog/${post.slug}`} className="group block" aria-label={`Read ${post.title}`}>
@@ -29,7 +38,19 @@ export function BlogListing({ posts, heading, description }: { posts: Post[]; he
             </article>
           ))}
         </div>
-      ) : <p className="mt-10 border-y border-slate-200 py-8 text-slate-600">No guides found in this category yet.</p>}
+      ) : (
+        <section className="mt-8 rounded-2xl border border-dashed border-emerald-200 bg-emerald-50/50 px-6 py-10 text-center sm:px-10">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-800">More guides are on the way</p>
+          <h2 className="editorial-serif mt-2 text-2xl text-slate-950">We&apos;re building this section.</h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-slate-600">In the meantime, explore the latest EarnPouch guides or choose another topic.</p>
+          <div className="mt-5 flex flex-wrap justify-center gap-2">
+            <Link href="/blog" className="rounded-full bg-emerald-700 px-4 py-2 text-sm font-bold text-white hover:bg-emerald-800">Browse all guides</Link>
+            {categories.filter((category) => category !== activeCategory).map((category) => (
+              <Link key={category} href={categoryPath(category)} className="rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:border-emerald-400 hover:text-emerald-800">{category}</Link>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }

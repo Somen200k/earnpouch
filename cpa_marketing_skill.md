@@ -61,7 +61,7 @@ The current EarnPouch navigation places its existing gift-card giveaway guides i
 - **CTA:** Use a clear action label that matches the campaign.
 - **Disclosure direction:** Identify the third-party app and disclose that eligibility, attribution, validation, and payment are controlled by the provider and network terms.
 
-### Side Hustles: market research
+### Career & Side Income: market research and job-search offers
 
 - **Working headline:** Market Research Panels: Check Whether Applications Are Open
 - **Snapshot:** Market research panel eligibility
@@ -70,7 +70,7 @@ The current EarnPouch navigation places its existing gift-card giveaway guides i
 - **CTA:** Check panel availability
 - **Disclosure direction:** Clarify whether this is an independent directory/referral and that registration or paid participation is not guaranteed.
 
-### Remote Work: task platforms
+This combined category also includes remote-work task platforms.
 
 - **Working headline:** Remote Task Platforms: Check Registration and Work Requirements
 - **Snapshot:** Online task platform guide

@@ -72,8 +72,8 @@ const initialSiteSettings: SiteSettingsState = {
 	heroBadge: "Practical money guides",
 	footerText: "Good information for earning, saving, and making the most of your money.",
 	affiliateNotice: "EarnPouch is reader-supported. We may earn an affiliate commission when you sign up through our links at no extra cost to you.",
-	navLinks: "Reward Apps, Side Hustles, Smart Budgeting, Remote Work, Giveaways & Sweepstakes",
-	categoriesText: "Reward Apps | App-install and CPI offers. Check each campaign's install requirements, eligibility, and payout terms.\nSide Hustles | Flexible ways to put your skills and spare hours to work.\nSmart Budgeting | Practical guidance for planning spending, saving, and making informed money decisions.\nRemote Work | Find legitimate opportunities beyond the office.\nGiveaways & Sweepstakes | Review third-party promotions, eligibility, entry requirements, and official rules before participating.",
+	navLinks: "Reward Apps, Career & Side Income, Smart Budgeting, Giveaways & Sweepstakes",
+	categoriesText: "Reward Apps | App-install and CPI offers. Check each campaign's install requirements, eligibility, and payout terms.\nCareer & Side Income | Explore job-search resources, flexible side hustles, and practical ways to earn extra income.\nSmart Budgeting | Practical guidance for planning spending, saving, and making informed money decisions.\nGiveaways & Sweepstakes | Review third-party promotions, eligibility, entry requirements, and official rules before participating.",
 };
 
 export function AdminEditor({ storageMode }: { storageMode: "GitHub" | "Local filesystem" }) {
