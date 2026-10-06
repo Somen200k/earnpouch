@@ -4,11 +4,6 @@ import matter from "gray-matter";
 import { categories, type PostCategory } from "@/lib/category-url";
 
 export const postDirectory = path.join(process.cwd(), "content", "posts");
-const pinnedPostOrder = new Map([
-  "nike-gift-card-giveaway-how-to-enter-2026",
-  "claim-cash-app-rewards-guide-2026",
-  "free-walmart-gift-cards-guide-2026",
-].map((slug, index) => [slug, index]));
 export type PostFaq = { question: string; answer: string };
 export type ComparisonEntry = { name: string; bonus: string; cashoutMin: string; payoutMethod: string; url?: string };
 export type QuickPick = { name: string; rating?: number; reviewCount?: number; bonus: string; cashoutMin: string; payoutMethod: string; features: string[]; steps?: string[]; ctaLabel?: string; mobileCtaNotice?: string; nextStepTitle?: string; nextStepDescription?: string; disclaimer?: string };
@@ -63,16 +58,7 @@ export function listPosts(includeUnpublished = false): Post[] {
   return fs.readdirSync(postDirectory).filter((file) => file.endsWith(".md"))
     .map((file) => parsePost(file.slice(0, -3), fs.readFileSync(path.join(postDirectory, file), "utf8")))
     .filter((post): post is Post => post !== null && (includeUnpublished || post.published))
-    .sort((first, second) => {
-      const firstPinned = pinnedPostOrder.get(first.slug);
-      const secondPinned = pinnedPostOrder.get(second.slug);
-      if (firstPinned !== undefined || secondPinned !== undefined) {
-        if (firstPinned === undefined) return 1;
-        if (secondPinned === undefined) return -1;
-        return firstPinned - secondPinned;
-      }
-      return second.date.localeCompare(first.date);
-    });
+    .sort((first, second) => second.date.localeCompare(first.date) || first.slug.localeCompare(second.slug));
 }
 
 export function getPost(slug: string): Post | undefined {
