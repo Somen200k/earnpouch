@@ -35,6 +35,8 @@ faqs:
     answer: "The offer listing shown to EarnPouch specifies Android users in the United States. The live campaign terms control current availability and eligibility."
   - question: "What information or steps are required?"
     answer: "The offer listing indicates that email and ZIP code are requested. The live page controls the actual entry process and may present additional terms or steps, so review it before submitting."
+  - question: "Is Walmart officially giving out free gift cards?"
+    answer: "This article does not establish that Walmart is giving out free gift cards. The offer discussed here is a third-party promotion listing a chance to win a $1,000 Walmart gift card, not a guaranteed gift card or an offer represented as sponsored by Walmart. Check the organizer and current rules on the offer page."
 ---
 
 ## Walmart gift card promotion: what the offer listing says
@@ -42,6 +44,12 @@ faqs:
 Looking for a Walmart gift card giveaway? EarnPouch has a tracked link to a third-party promotion whose listing advertises a **chance to win a $1,000 Walmart gift card**. The listing specifies **United States Android** and indicates that entrants submit an email address and ZIP code.
 
 This is not a Walmart gift-card balance or a guaranteed shopping credit. Walmart is not represented as the promotion's sponsor. The third-party organizer's live page and official rules—not the headline—control eligibility, entry, and prize details.
+
+## Understanding Walmart gift card offers and verification
+
+Searches for a **free $50 Walmart gift card** do not verify that a particular offer exists or that a gift card is guaranteed. The third-party promotion listing discussed in this guide describes a **chance to win a $1,000 Walmart gift card**; it is not a promise of a free $50 card, and Walmart is not represented as its sponsor. Check the organizer, eligibility, prize details, and rules on the live offer page.
+
+If you are looking for **how digital Walmart e-cards work** or searching for **Walmart e-cards free**, this promotion listing does not explain Walmart's digital gift-card terms or confirm that its prize is an e-card. Check Walmart's own current gift-card information for details about Walmart products; review the promotion's official rules for this third-party offer.
 
 ## Check eligibility and entry steps
 
