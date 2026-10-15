@@ -84,14 +84,16 @@ export default async function BlogPostPage({ params }: PageProps) {
         {relatedPosts.length > 0 && <section className="mt-12 border-t border-slate-200 pt-8" aria-labelledby="related-guides-title">
           <p className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-800">Keep exploring</p>
           <h2 id="related-guides-title" className="editorial-serif mt-2 text-3xl text-slate-950">More guides you might like</h2>
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {relatedPosts.map((relatedPost) => <article key={relatedPost.slug} className="border-t border-slate-200 pt-4">
-              <p className="text-xs font-bold uppercase tracking-wider text-emerald-800">{relatedPost.category}</p>
-              <h3 className="editorial-serif mt-2 text-xl leading-tight">
-                <Link href={`/blog/${relatedPost.slug}`} className="hover:text-blue-700">{relatedPost.title}</Link>
+          <div className="mt-6 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedPosts.map((relatedPost) => <article key={relatedPost.slug} className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg focus-within:border-emerald-400 focus-within:ring-2 focus-within:ring-emerald-100">
+              <p className="w-fit rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-800">{relatedPost.category}</p>
+              <h3 className="editorial-serif mt-4 text-xl leading-tight text-slate-950">
+                <Link href={`/blog/${relatedPost.slug}`} className="rounded-sm transition-colors group-hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700">{relatedPost.title}</Link>
               </h3>
-              <p className="mt-2 text-sm leading-6 text-slate-600">{relatedPost.excerpt}</p>
-              <Link href={`/blog/${relatedPost.slug}`} className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-blue-700 hover:text-blue-800">Read guide <ArrowRight size={15} /></Link>
+              <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">{relatedPost.excerpt}</p>
+              <Link href={`/blog/${relatedPost.slug}`} className="mt-5 inline-flex w-fit items-center gap-2 text-sm font-bold text-blue-700 transition-colors hover:text-blue-800">
+                Read guide <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+              </Link>
             </article>)}
           </div>
         </section>}
