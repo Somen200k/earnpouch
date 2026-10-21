@@ -16,7 +16,7 @@ quickPick:
   bonus: "Play games and complete tasks to collect coins; terms and rewards vary"
   cashoutMin: "Check current redemption thresholds in the app"
   payoutMethod: "The app listing describes available reward options; confirm current options in the app"
-  ctaLabel: "Check Playful Rewards"
+  ctaLabel: "Review App Requirements"
   nextStepTitle: "Enjoy mobile games? Review the current Playful Rewards offer."
   nextStepDescription: "Check the live offer for device and location eligibility, required steps, permissions, and current reward terms before installing."
   mobileCtaNotice: "Current campaign listed for eligible US Android users • Install app and 1 game"

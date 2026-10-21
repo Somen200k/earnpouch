@@ -17,7 +17,7 @@ quickPick:
   bonus: "Independent job-search listings; availability varies by location"
   cashoutMin: "Not applicable"
   payoutMethod: "Not applicable"
-  ctaLabel: "Check Local Job Listings"
+  ctaLabel: "Search Openings Near You ➔"
   mobileCtaNotice: "Third-party job-search service • Verify openings with employers"
   nextStepTitle: "Looking for warehouse or fulfillment work nearby?"
   nextStepDescription: "Review the listing, then confirm the employer, job details, and application destination before sharing information."
@@ -97,6 +97,8 @@ Using a search aggregator to discover a position may not be the same as applying
 ## Avoid job-search scams
 
 Be cautious of anyone who asks you to pay an application, interview, equipment, or placement fee, or promises guaranteed employment without a normal hiring process. Verify recruiters and openings using contact information from the employer's official website. Do not share passwords, one-time security codes, payment-card PINs, or bank login credentials with a recruiter or job-search service. Treat unexpected messages promising immediate hiring with care and verify the job independently.
+
+For more guidance on checking a third-party job-search service, read our [NewJobsLooker safety review](/blog/is-newjobslooker-legit-review-2026).
 
 ## Frequently asked questions
 

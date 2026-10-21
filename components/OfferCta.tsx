@@ -1,37 +1,35 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { getCtaButtonLabel } from "@/lib/cta-label";
 import type { Post } from "@/lib/posts";
 
 export function OfferCta({ post, secondary = false, compact = false }: { post: Post; secondary?: boolean; compact?: boolean }) {
-  const label = post.quickPick?.ctaLabel?.trim() || "Continue to offer";
-  const notice = post.quickPick?.disclaimer?.trim()
-    || "Review the provider's current eligibility and requirements before continuing.";
+  const label = getCtaButtonLabel(post);
 
   if (compact) {
     return (
-      <div className="mt-5 border-t border-emerald-200/80 pt-4 sm:flex sm:items-center sm:justify-between sm:gap-6" aria-label="Featured offer action">
-        <div className="mb-3 min-w-0 sm:mb-0">
-          <p className="text-xs leading-5 text-slate-600">{notice}</p>
-          <p className="mt-1 text-[10px] leading-4 text-slate-400">
-            Affiliate link · <Link href="/affiliate-disclosure" className="underline underline-offset-2 hover:text-slate-600">disclosure</Link>
-          </p>
-        </div>
+      <div className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4" aria-label="Featured affiliate offer action">
         {post.primaryCpaUrl ? (
           <Link
             id="primary-offer-cta"
             href={post.primaryCpaUrl}
             rel="sponsored nofollow noopener noreferrer"
             target="_blank"
-            className="group inline-flex min-h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-700 to-teal-700 px-6 py-3 text-center text-sm font-extrabold text-white shadow-md shadow-emerald-900/15 transition hover:-translate-y-0.5 hover:from-emerald-800 hover:to-teal-800 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 sm:w-auto sm:min-w-52"
+            className="group inline-flex min-h-16 w-full shrink-0 items-center justify-center gap-3 rounded-2xl border border-white/20 bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 px-5 py-3 text-center text-[15px] font-extrabold leading-snug text-white shadow-[0_10px_24px_rgba(5,150,105,0.25)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:from-emerald-700 hover:via-emerald-800 hover:to-teal-800 hover:shadow-[0_14px_30px_rgba(5,150,105,0.32)] active:translate-y-0 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 focus-visible:ring-4 focus-visible:ring-emerald-500/25 motion-reduce:transform-none motion-reduce:transition-none"
           >
             {label}
-            <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25 transition-colors group-hover:bg-white/25">
+              <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </span>
           </Link>
         ) : (
           <span className="inline-flex min-h-12 items-center justify-center rounded-lg bg-slate-200 px-5 py-3 text-sm font-semibold text-slate-500">
             Offer link not configured
           </span>
         )}
+        <div className="text-center text-[11px] leading-4 text-slate-500">
+          Independent listings • Affiliate link <Link href="/affiliate-disclosure" className="font-semibold underline underline-offset-2 hover:text-slate-700">disclosure</Link>
+        </div>
       </div>
     );
   }
@@ -52,8 +50,7 @@ export function OfferCta({ post, secondary = false, compact = false }: { post: P
             {post.quickPick?.nextStepDescription?.trim()
               || "Continue to the provider's offer page to review the current requirements and complete the listed action if you choose."}
           </p>
-          <p className="mt-3 max-w-xl text-xs leading-5 text-slate-500">{notice}</p>
-          <p className="mt-1 text-[10px] leading-4 text-slate-400">
+          <p className="mt-3 text-[11px] leading-4 text-slate-500">
             Affiliate link · <Link href="/affiliate-disclosure" className="underline underline-offset-2 hover:text-slate-600">disclosure</Link>
           </p>
         </div>
@@ -64,10 +61,12 @@ export function OfferCta({ post, secondary = false, compact = false }: { post: P
               href={post.primaryCpaUrl}
               rel="sponsored nofollow noopener noreferrer"
               target="_blank"
-              className="group inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-700 to-teal-700 px-7 py-3 text-center text-sm font-extrabold text-white shadow-lg shadow-emerald-900/20 transition hover:-translate-y-0.5 hover:from-emerald-800 hover:to-teal-800 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 sm:min-w-60 sm:w-auto"
+              className="group inline-flex min-h-16 w-full items-center justify-center gap-3 rounded-2xl border border-white/20 bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 px-7 py-3 text-center text-[15px] font-extrabold leading-snug text-white shadow-[0_10px_24px_rgba(5,150,105,0.25)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:from-emerald-700 hover:via-emerald-800 hover:to-teal-800 hover:shadow-[0_14px_30px_rgba(5,150,105,0.32)] active:translate-y-0 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 focus-visible:ring-4 focus-visible:ring-emerald-500/25 motion-reduce:transform-none motion-reduce:transition-none sm:min-w-60 sm:w-auto"
             >
               {label}
-              <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25 transition-colors group-hover:bg-white/25">
+                <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
             </Link>
           ) : (
             <span className="inline-flex min-h-14 items-center justify-center rounded-lg bg-slate-200 px-5 py-3 text-sm font-semibold text-slate-500">

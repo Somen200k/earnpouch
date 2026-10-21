@@ -19,7 +19,7 @@ quickPick:
   bonus: "Chance to win; not a guaranteed reward"
   cashoutMin: "Not applicable; review promotion terms"
   payoutMethod: "See the provider's current terms"
-  ctaLabel: "Continue to offer"
+  ctaLabel: "Review PayPal Promotion"
   mobileCtaNotice: "Separate PayPal promotion • US • Chance to win"
   features:
     - "Separate from microtask work and platform payouts"
@@ -89,3 +89,5 @@ EarnPouch may earn a commission if you use this link. The provider sets eligibil
 ## The bottom line
 
 Micro-tasks can provide occasional paid activities, but availability and compensation vary. Verify PayPal support and withdrawal rules directly with each service, protect your accounts, and skip offers whose requirements or promises are unclear.
+
+For a separate example of reviewing a brand-themed giveaway's eligibility and privacy terms, see our [Cash App giveaway rules and scam-check guide](/blog/claim-cash-app-rewards-guide-2026).

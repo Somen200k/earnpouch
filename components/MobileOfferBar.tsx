@@ -1,23 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { getCtaButtonLabel } from "@/lib/cta-label";
 import type { Post } from "@/lib/posts";
 
 export function MobileOfferBar({ post }: { post: Post }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const primaryCta = document.getElementById("primary-offer-cta");
-    const secondaryCta = document.getElementById("secondary-offer-cta");
-    if (!primaryCta || !secondaryCta) return;
-
     const updateVisibility = () => {
-      const primaryBounds = primaryCta.getBoundingClientRect();
-      const secondaryBounds = secondaryCta.getBoundingClientRect();
-      const secondaryIsVisible = secondaryBounds.top < window.innerHeight && secondaryBounds.bottom > 0;
-      setVisible(primaryBounds.bottom <= 0 && !secondaryIsVisible);
+      setVisible(window.matchMedia("(max-width: 767px)").matches && window.scrollY > 500);
     };
 
     window.addEventListener("scroll", updateVisibility, { passive: true });
@@ -29,29 +22,43 @@ export function MobileOfferBar({ post }: { post: Post }) {
     };
   }, []);
 
-  if (!post.primaryCpaUrl || !visible) return null;
-  const title = post.quickPick?.name ?? "View the provider's offer details";
-  const label = post.quickPick?.ctaLabel?.trim() || "Continue";
-  const notice = post.quickPick?.mobileCtaNotice ?? "Third-party offer • Review steps and terms • Reward not guaranteed";
+  if (!post.primaryCpaUrl) return null;
+
+  const searchContext = [
+    post.quickPick?.name,
+    post.quickPick?.ctaLabel,
+    post.quickPick?.mobileCtaNotice,
+  ].filter(Boolean).join(" ");
+  const isJobSearchOffer = /job|opening|listing/i.test(searchContext);
+  const title = isJobSearchOffer
+    ? "Verify Local Listings"
+    : post.quickPick?.nextStepTitle?.trim() || post.quickPick?.name || "Review this offer";
+  const subtitle = isJobSearchOffer ? "Find active open shifts" : "Review the current offer details";
+  const label = getCtaButtonLabel(post);
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-30 border-t border-emerald-200 bg-white/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-10px_30px_rgba(15,23,42,0.12)] backdrop-blur md:hidden">
+    <div
+      aria-hidden={!visible}
+      className={`fixed bottom-0 left-0 right-0 z-30 block border-t border-slate-200/80 bg-white p-4 shadow-[0_-8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 ease-out md:hidden ${
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none invisible translate-y-full opacity-0"
+      }`}
+    >
       <div className="mx-auto flex max-w-lg items-center gap-3">
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-slate-900">{title}</p>
-          {notice && <p className="mt-0.5 line-clamp-2 text-[10px] leading-4 text-amber-900">{notice}</p>}
-          <p className="mt-0.5 truncate text-[10px] leading-4 text-slate-400">
-            Affiliate link · <Link href="/affiliate-disclosure" className="underline">disclosure</Link>
+          <p className="truncate text-sm font-bold leading-5 text-slate-900">{title}</p>
+          <p className="truncate text-xs leading-4 text-slate-600">{subtitle}</p>
+          <p className="text-[10px] leading-4 text-slate-500">
+            Affiliate link · <Link href="/affiliate-disclosure" tabIndex={visible ? 0 : -1} className="underline">disclosure</Link>
           </p>
         </div>
         <Link
           href={post.primaryCpaUrl}
           target="_blank"
           rel="sponsored nofollow noopener noreferrer"
-          className="inline-flex min-h-12 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-emerald-700 px-4 text-sm font-extrabold text-white shadow-md shadow-emerald-900/15 transition hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+          tabIndex={visible ? 0 : -1}
+          className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-[#00a86b] px-5 py-2.5 text-xs font-bold text-white transition-colors hover:bg-[#008f5a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008f5a] motion-reduce:transition-none"
         >
-          {label}
-          <ArrowUpRight size={16} />
+          {label} ➔
         </Link>
       </div>
     </div>

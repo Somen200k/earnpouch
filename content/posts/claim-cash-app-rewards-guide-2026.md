@@ -17,7 +17,7 @@ quickPick:
   bonus: "Chance to win; not a guaranteed reward or Cash App balance"
   cashoutMin: "Not applicable; check the official campaign rules"
   payoutMethod: "See the current promotion terms"
-  ctaLabel: "Check Promotion Details"
+  ctaLabel: "Check Promotion Eligibility"
   mobileCtaNotice: "Third-party promotion • Current listing indicates US iOS"
   nextStepTitle: "Review the campaign before deciding whether to enter"
   nextStepDescription: "Check the live promotion page for the organizer, eligibility, entry requirements, and privacy terms."

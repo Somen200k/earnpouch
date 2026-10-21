@@ -19,7 +19,7 @@ body { margin: 0; background: var(--page); color: var(--ink); font-family: "Aven
 button, input, select, textarea { font: inherit; }
 .editorial-serif { font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif; letter-spacing: 0; }
 .article-content :where(h2, h3) { scroll-margin-top: 7rem; }
-.article-content :where(a) { color: #1d4ed8; }
+.article-content :where(a):not(:where(.not-prose *)) { color: #1d4ed8; }
 .article-content :where(img) { border-radius: 0.75rem; }
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }

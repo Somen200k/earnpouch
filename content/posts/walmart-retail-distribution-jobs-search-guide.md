@@ -17,7 +17,7 @@ quickPick:
   bonus: "Third-party job-search listings; availability varies by location"
   cashoutMin: "Not applicable"
   payoutMethod: "Not applicable"
-  ctaLabel: "Check Local Job Listings"
+  ctaLabel: "Search Openings Near You ➔"
   mobileCtaNotice: "Independent job-search service • Verify openings with the employer"
   nextStepTitle: "Looking for a local store or distribution role?"
   nextStepDescription: "Review the job-search results, then confirm the employer, current opening, and application process before sharing information."

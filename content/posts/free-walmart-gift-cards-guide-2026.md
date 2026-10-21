@@ -17,7 +17,7 @@ quickPick:
   bonus: "Chance to win; not a guaranteed reward"
   cashoutMin: "Not applicable; review promotion terms"
   payoutMethod: "See the provider's current terms"
-  ctaLabel: "Check Promotion Details"
+  ctaLabel: "Check Promotion Eligibility"
   mobileCtaNotice: "Third-party promotion • Current listing is for US Android users"
   nextStepTitle: "Review the campaign before deciding whether to enter"
   nextStepDescription: "Check the live promotion page for the organizer, eligibility, entry requirements, and privacy terms."
@@ -84,6 +84,8 @@ Do not assume the chance of winning, number of entrants, selection technology, o
 - **Review data collection.** Read the privacy notice and any consent language before submitting your email or ZIP code.
 - **Check the destination.** Know whether a link opens the promotion organizer, an advertiser, or another third-party service.
 - **Avoid eligibility workarounds.** Use accurate information and follow the campaign's location and device requirements.
+
+If you are looking for employment with Walmart rather than a gift-card promotion, see our [guide to Walmart retail and distribution jobs](/blog/walmart-retail-distribution-jobs-search-guide).
 
 ## Frequently asked questions
 

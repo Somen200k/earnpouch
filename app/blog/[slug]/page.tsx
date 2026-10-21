@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, CalendarDays } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ArticleShare } from "@/components/ArticleShare";
+import { ArticleStructuredData } from "@/components/ArticleStructuredData";
 import { ComparisonTable } from "@/components/ComparisonTable";
+import { InTextRecommendation } from "@/components/InTextRecommendation";
 import { MobileOfferBar } from "@/components/MobileOfferBar";
 import { OfferCta } from "@/components/OfferCta";
-import { QuickPickHero } from "@/components/QuickPickHero";
+import { QuickPickDetails, QuickPickHero } from "@/components/QuickPickHero";
 import { categoryPath } from "@/lib/category-url";
 import { getPost, listPosts } from "@/lib/posts";
-import { renderMarkdown } from "@/lib/render-markdown";
+import { renderMarkdown, splitCpaWidgetShortcode } from "@/lib/render-markdown";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -48,34 +51,50 @@ export default async function BlogPostPage({ params }: PageProps) {
         (candidate.category === post.category ? 3 : 0) +
         candidate.tags.filter((tag) => post.tags.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())).length * 2,
     }))
-    .filter(({ relevance }) => relevance >= 2)
     .sort((first, second) => second.relevance - first.relevance || second.post.date.localeCompare(first.post.date))
     .slice(0, 3)
     .map(({ post: relatedPost }) => relatedPost);
-  const html = await renderMarkdown(withoutMarkdownFaq(post.content));
-  const schemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      headline: post.title,
-      description: post.excerpt,
-      datePublished: post.date,
-      author: { "@type": "Organization", name: "EarnPouch Editorial Team" },
-      publisher: { "@type": "Organization", name: "EarnPouch" },
-      mainEntityOfPage: `https://www.earnpouch.com/blog/${post.slug}`,
-      ...(post.coverImage ? { image: [post.coverImage] } : {}),
-    },
-    ...(post.faqs.length ? [{ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: post.faqs.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })) }] : []),
-  ];
-
-  return <main className="pb-40 md:pb-0">{schemas.map((schema, index) => <script key={index} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />)}
-    <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12"><Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-blue-700"><ArrowLeft size={15} /> All guides</Link>
-      <div className="mx-auto mt-8 max-w-4xl"><div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold uppercase tracking-[0.12em] text-blue-700"><Link href={categoryPath(post.category)} className="hover:underline">{post.category}</Link><span className="h-1 w-1 rounded-full bg-slate-400" /><span className="inline-flex items-center gap-1.5 font-medium normal-case tracking-normal text-slate-500"><CalendarDays size={14} />{new Date(`${post.date}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span></div>
-        <h1 className="editorial-serif mt-4 max-w-4xl text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">{post.title}</h1>
+  const markdownParts = splitCpaWidgetShortcode(withoutMarkdownFaq(post.content));
+  const articleParts = await Promise.all(
+    markdownParts.map(async (part) =>
+      part.type === "markdown" ? { ...part, html: await renderMarkdown(part.content) } : part,
+    ),
+  );
+  const publishedDate = new Date(`${post.date}T12:00:00`).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  return <main className="pb-40 md:pb-0"><ArticleStructuredData post={post} />{post.faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: post.faqs.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })) }).replace(/</g, "\\u003c") }} />}
+    <div className="mx-auto max-w-4xl px-5 py-8 sm:px-8"><Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-blue-700"><ArrowLeft size={15} /> All guides</Link>
+      <div className="mt-8"><div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold uppercase tracking-[0.12em] text-blue-700"><Link href={categoryPath(post.category)} className="hover:underline">{post.category}</Link></div>
+        <h1 className="editorial-serif mt-4 max-w-4xl text-3xl leading-[1.1] sm:text-4xl lg:text-5xl">{post.title}</h1>
+        <div className="mb-6 mt-5 flex items-center gap-3 border-b border-slate-100 pb-5 text-xs text-slate-500 md:text-sm">
+          <Image
+            src="/editorial-team-avatar.svg"
+            alt=""
+            aria-hidden="true"
+            width={32}
+            height={32}
+            className="h-8 w-8 shrink-0 rounded-full border border-slate-200"
+          />
+          <p>
+            Written by EarnPouch Editorial Team <span aria-hidden="true">•</span>{" "}
+            <span className="font-medium text-slate-700">Published {publishedDate}</span>
+          </p>
+        </div>
+        {post.primaryCpaUrl && <>
+          <div className="mt-6"><QuickPickHero post={post} /></div>
+          <div className="hidden md:block"><QuickPickDetails post={post} /></div>
+        </>}
         <ArticleShare title={post.title} url={`https://www.earnpouch.com/blog/${post.slug}`} />
-        {post.primaryCpaUrl && <div className="mt-6"><QuickPickHero post={post} /></div>}
-        {post.content.trim() && (
-          <article className="article-content prose prose-slate mx-auto mt-9 max-w-none rounded-2xl border border-slate-200 bg-white px-6 py-7 shadow-[0_12px_36px_rgba(15,23,42,0.05)] first:prose-p:text-lg first:prose-p:leading-8 first:prose-p:text-slate-700 prose-headings:font-semibold prose-p:leading-8 prose-li:leading-7 prose-a:font-semibold prose-a:underline-offset-4 prose-h2:mt-12 prose-h2:border-l-4 prose-h2:border-emerald-500 prose-h2:pl-4 prose-h2:leading-tight prose-h3:mt-8 prose-blockquote:rounded-r-lg prose-blockquote:bg-emerald-50/70 prose-blockquote:px-5 prose-blockquote:py-2 prose-blockquote:border-emerald-500 prose-blockquote:text-slate-600 prose-img:rounded-xl [&_p]:max-w-[72ch] [&_ul]:max-w-[72ch] [&_ol]:max-w-[72ch] sm:px-10 sm:py-10 lg:px-12 lg:py-12" dangerouslySetInnerHTML={{ __html: html }} />
+        {post.primaryCpaUrl && <div className="md:hidden"><QuickPickDetails post={post} /></div>}
+        {articleParts.length > 0 && (
+          <article className="article-content prose prose-slate mx-auto mt-9 max-w-none rounded-2xl border border-slate-200 bg-white px-6 py-7 shadow-[0_12px_36px_rgba(15,23,42,0.05)] first:prose-p:text-lg first:prose-p:leading-8 first:prose-p:text-slate-700 prose-headings:font-semibold prose-p:leading-8 prose-li:leading-7 prose-a:font-semibold prose-a:underline-offset-4 prose-h2:mt-12 prose-h2:border-l-4 prose-h2:border-emerald-500 prose-h2:pl-4 prose-h2:leading-tight prose-h3:mt-8 prose-blockquote:rounded-r-lg prose-blockquote:bg-emerald-50/70 prose-blockquote:px-5 prose-blockquote:py-2 prose-blockquote:border-emerald-500 prose-blockquote:text-slate-600 prose-img:rounded-xl [&_p]:max-w-[72ch] [&_ul]:max-w-[72ch] [&_ol]:max-w-[72ch] sm:px-10 sm:py-10 lg:px-12 lg:py-12">
+          {articleParts.map((part, index) => part.type === "cpa-widget"
+            ? <InTextRecommendation key={`cpa-widget-${index}`} post={post} />
+            : <div key={`markdown-${index}`} dangerouslySetInnerHTML={{ __html: part.html }} />)}
+          </article>
         )}
         <script dangerouslySetInnerHTML={{ __html: "(function(s){s.dataset.zone='11932119',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))" }} />
         {post.comparison.length > 0 && <section className="mt-10"><h2 className="editorial-serif text-3xl">Compare the options</h2><p className="mt-2 text-sm text-slate-600">Terms are subject to change. Confirm details on each provider&apos;s website.</p><ComparisonTable entries={post.comparison} /></section>}
@@ -97,7 +116,12 @@ export default async function BlogPostPage({ params }: PageProps) {
             </article>)}
           </div>
         </section>}
-        <div className="mt-10 border-t border-slate-200 pt-5 text-xs leading-5 text-slate-500">This article is for informational purposes only and is not financial, tax, or legal advice. See our <Link href="/affiliate-disclosure" className="font-semibold text-blue-700 underline">affiliate disclosure</Link>.</div>
+        <div className="mt-10 border-t border-slate-200 pt-5 text-xs leading-5 text-slate-600">
+          {post.quickPick?.disclaimer?.trim() && <p>{post.quickPick.disclaimer.trim()}</p>}
+          <p className={post.quickPick?.disclaimer?.trim() ? "mt-2" : ""}>
+            This article is for informational purposes only and is not financial, tax, or legal advice. See our <Link href="/affiliate-disclosure" className="font-semibold text-blue-700 underline">affiliate disclosure</Link>.
+          </p>
+        </div>
       </div>
     </div><MobileOfferBar post={post} />
   </main>;
