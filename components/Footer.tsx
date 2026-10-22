@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { categories, categoryPath } from "@/lib/category-url";
 
 const legalLinks = [
+  ["About EarnPouch", "/about"],
+  ["Editorial standards", "/editorial-standards"],
   ["Privacy policy", "/privacy-policy"], 
   ["Terms of service", "/terms-of-service"], 
   ["Affiliate disclosure", "/affiliate-disclosure"], 
@@ -17,7 +20,7 @@ export function Footer() {
   return (
     <footer className="border-t border-slate-800 bg-slate-950 text-slate-300">
       <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:px-12">
-        <div className="grid gap-10 sm:grid-cols-[1.2fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-[1.2fr_1fr_1fr]">
           <div>
             <Link href="/" className="inline-flex items-center gap-2 text-xl font-extrabold tracking-[-0.04em] text-white">
               {siteName}
@@ -26,7 +29,17 @@ export function Footer() {
             <p className="mt-3 max-w-sm text-sm leading-6 text-slate-400">{footerText}</p>
             <p className="mt-5 max-w-xl border-l-2 border-emerald-500 pl-4 text-xs leading-5 text-slate-400">{affiliateNotice}</p>
           </div>
-          
+          <nav aria-label="Explore topics">
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Explore topics</p>
+            <ul className="mt-4 grid gap-3 text-sm">
+              {categories.map((category) => (
+                <li key={category}>
+                  <Link href={categoryPath(category)} className="transition-colors hover:text-white">{category}</Link>
+                </li>
+              ))}
+              <li><Link href="/blog" className="font-semibold text-emerald-300 transition-colors hover:text-white">All guides</Link></li>
+            </ul>
+          </nav>
           <div className="sm:justify-self-end">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">Explore {siteName}</p>
             <div className="mt-4 grid grid-cols-2 gap-x-8 gap-y-3">

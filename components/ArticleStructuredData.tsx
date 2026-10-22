@@ -9,6 +9,7 @@ export function ArticleStructuredData({ post }: { post: Post }) {
       headline: post.title,
       description: post.excerpt,
       datePublished: post.date,
+      ...(post.lastReviewed ? { dateModified: post.lastReviewed } : {}),
       author: {
         "@type": "Organization",
         name: "EarnPouch Editorial Team",

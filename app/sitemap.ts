@@ -4,7 +4,7 @@ import { listPosts } from "@/lib/posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.earnpouch.com";
-  const staticPages = ["", "/blog", "/privacy-policy", "/terms-of-service", "/affiliate-disclosure", "/contact"];
+  const staticPages = ["", "/blog", "/about", "/editorial-standards", "/privacy-policy", "/terms-of-service", "/affiliate-disclosure", "/contact"];
   const posts = listPosts();
   // Keep empty category routes available, but omit thin listings from the sitemap until they have content.
   const populatedCategories = categories.filter((category) => posts.some((post) => post.category === category));

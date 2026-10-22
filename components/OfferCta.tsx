@@ -5,6 +5,11 @@ import type { Post } from "@/lib/posts";
 
 export function OfferCta({ post, secondary = false, compact = false }: { post: Post; secondary?: boolean; compact?: boolean }) {
   const label = getCtaButtonLabel(post);
+  const destinationNote = post.category === "Career & Side Income"
+    ? "Independent job-search service · Verify current listings."
+    : post.category === "Giveaways & Sweepstakes"
+      ? "Independent promotion · Review the current rules."
+      : "Third-party offer · Review current terms.";
 
   if (compact) {
     return (
@@ -15,20 +20,20 @@ export function OfferCta({ post, secondary = false, compact = false }: { post: P
             href={post.primaryCpaUrl}
             rel="sponsored nofollow noopener noreferrer"
             target="_blank"
-            className="group inline-flex min-h-16 w-full shrink-0 items-center justify-center gap-3 rounded-2xl border border-white/20 bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 px-5 py-3 text-center text-[15px] font-extrabold leading-snug text-white shadow-[0_10px_24px_rgba(5,150,105,0.25)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:from-emerald-700 hover:via-emerald-800 hover:to-teal-800 hover:shadow-[0_14px_30px_rgba(5,150,105,0.32)] active:translate-y-0 active:scale-[0.99] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 focus-visible:ring-4 focus-visible:ring-emerald-500/25 motion-reduce:transform-none motion-reduce:transition-none"
+            className="group inline-flex min-h-16 w-full shrink-0 items-center justify-center gap-3 rounded-full bg-[#00a86b] px-6 py-3 text-center text-sm font-bold tracking-wide text-white shadow-sm transition-all duration-200 hover:bg-[#008f5a] hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#008f5a] motion-reduce:transition-none"
           >
-            {label}
-            <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25 transition-colors group-hover:bg-white/25">
-              <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </span>
+            {label} ➔
           </Link>
         ) : (
           <span className="inline-flex min-h-12 items-center justify-center rounded-lg bg-slate-200 px-5 py-3 text-sm font-semibold text-slate-500">
             Offer link not configured
           </span>
         )}
-        <div className="text-center text-[11px] leading-4 text-slate-500">
-          Independent listings • Affiliate link <Link href="/affiliate-disclosure" className="font-semibold underline underline-offset-2 hover:text-slate-700">disclosure</Link>
+        <div className="text-center text-[11px] leading-4 text-slate-400">
+          <span className="block">{destinationNote}</span>
+          <span className="mt-1 block text-slate-500">
+            Affiliate link · <Link href="/affiliate-disclosure" className="font-semibold underline underline-offset-2 hover:text-slate-700">disclosure</Link>
+          </span>
         </div>
       </div>
     );

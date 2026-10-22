@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ArticleShare } from "@/components/ArticleShare";
 import { ArticleStructuredData } from "@/components/ArticleStructuredData";
 import { ComparisonTable } from "@/components/ComparisonTable";
@@ -12,7 +12,8 @@ import { OfferCta } from "@/components/OfferCta";
 import { QuickPickDetails, QuickPickHero } from "@/components/QuickPickHero";
 import { categoryPath } from "@/lib/category-url";
 import { getPost, listPosts } from "@/lib/posts";
-import { renderMarkdown, splitCpaWidgetShortcode } from "@/lib/render-markdown";
+import { getReadingTimeMinutes } from "@/lib/reading-time";
+import { getArticleHeadings, renderMarkdown, splitCpaWidgetShortcode } from "@/lib/render-markdown";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: post.title,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
-    openGraph: { title: post.title, description: post.excerpt, type: "article", publishedTime: post.date, images: post.coverImage ? [post.coverImage] : undefined },
+    openGraph: { title: post.title, description: post.excerpt, type: "article", publishedTime: post.date, modifiedTime: post.lastReviewed, images: post.coverImage ? [post.coverImage] : undefined },
     twitter: { card: "summary_large_image", title: post.title, description: post.excerpt, images: post.coverImage ? [post.coverImage] : undefined },
   };
 }
@@ -51,13 +52,23 @@ export default async function BlogPostPage({ params }: PageProps) {
         (candidate.category === post.category ? 3 : 0) +
         candidate.tags.filter((tag) => post.tags.some((postTag) => postTag.toLowerCase() === tag.toLowerCase())).length * 2,
     }))
+    .filter(({ relevance }) => relevance > 0)
     .sort((first, second) => second.relevance - first.relevance || second.post.date.localeCompare(first.post.date))
     .slice(0, 3)
     .map(({ post: relatedPost }) => relatedPost);
   const markdownParts = splitCpaWidgetShortcode(withoutMarkdownFaq(post.content));
+  const articleHeadings = getArticleHeadings(markdownParts);
   const articleParts = await Promise.all(
-    markdownParts.map(async (part) =>
-      part.type === "markdown" ? { ...part, html: await renderMarkdown(part.content) } : part,
+    markdownParts.map(async (part, index) =>
+      part.type === "markdown"
+        ? {
+            ...part,
+            html: await renderMarkdown(
+              part.content,
+              articleHeadings.filter((heading) => heading.partIndex === index).map((heading) => heading.id),
+            ),
+          }
+        : part,
     ),
   );
   const publishedDate = new Date(`${post.date}T12:00:00`).toLocaleDateString("en-US", {
@@ -65,30 +76,64 @@ export default async function BlogPostPage({ params }: PageProps) {
     day: "numeric",
     year: "numeric",
   });
+  const reviewedDate = post.lastReviewed
+    ? new Date(`${post.lastReviewed}T12:00:00`).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : undefined;
   return <main className="pb-40 md:pb-0"><ArticleStructuredData post={post} />{post.faqs.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: post.faqs.map((faq) => ({ "@type": "Question", name: faq.question, acceptedAnswer: { "@type": "Answer", text: faq.answer } })) }).replace(/</g, "\\u003c") }} />}
-    <div className="mx-auto max-w-4xl px-5 py-8 sm:px-8"><Link href="/blog" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-blue-700"><ArrowLeft size={15} /> All guides</Link>
-      <div className="mt-8"><div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-bold uppercase tracking-[0.12em] text-blue-700"><Link href={categoryPath(post.category)} className="hover:underline">{post.category}</Link></div>
-        <h1 className="editorial-serif mt-4 max-w-4xl text-3xl leading-[1.1] sm:text-4xl lg:text-5xl">{post.title}</h1>
+    <div className="mx-auto max-w-4xl px-5 py-8 sm:px-8"><nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500"><Link href="/blog" className="hover:text-[#008f5a]">All guides</Link><span aria-hidden="true">/</span><Link href={categoryPath(post.category)} className="text-[#008f5a] hover:underline">{post.category}</Link></nav>
+      <div className="mt-8">
+        <h1 className="editorial-serif max-w-4xl text-3xl leading-[1.1] sm:text-4xl lg:text-5xl">{post.title}</h1>
+        <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">{post.excerpt}</p>
         <div className="mb-6 mt-5 flex items-center gap-3 border-b border-slate-100 pb-5 text-xs text-slate-500 md:text-sm">
-          <Image
-            src="/editorial-team-avatar.svg"
-            alt=""
-            aria-hidden="true"
-            width={32}
-            height={32}
-            className="h-8 w-8 shrink-0 rounded-full border border-slate-200"
-          />
           <p>
             Written by EarnPouch Editorial Team <span aria-hidden="true">•</span>{" "}
             <span className="font-medium text-slate-700">Published {publishedDate}</span>
+            {reviewedDate && <> <span aria-hidden="true">•</span> <span className="font-medium text-slate-700">Reviewed {reviewedDate}</span></>}
+            <span aria-hidden="true"> • </span>{getReadingTimeMinutes(post.content)} min read
           </p>
         </div>
+        {post.coverImage && (
+          <figure className="mb-6 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+            <div className="relative aspect-[16/9] bg-slate-100 sm:aspect-[2/1]">
+              <Image
+                src={post.coverImage}
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 800px"
+                className="object-cover"
+              />
+            </div>
+            {post.coverImage.includes("images.unsplash.com") && (
+              <figcaption className="px-4 py-2 text-xs text-slate-500">Illustrative stock photo; not the provider, offer, or prize.</figcaption>
+            )}
+          </figure>
+        )}
         {post.primaryCpaUrl && <>
           <div className="mt-6"><QuickPickHero post={post} /></div>
-          <div className="hidden md:block"><QuickPickDetails post={post} /></div>
+          <QuickPickDetails post={post} />
         </>}
+        {articleHeadings.filter((heading) => heading.depth === 2 || heading.depth === 3).length > 1 && (
+          <details className="mt-6 rounded-xl border border-slate-200 bg-white p-4 sm:p-5">
+            <summary className="cursor-pointer list-none font-bold text-slate-900 marker:hidden">
+              In this guide <span className="ml-1 text-sm font-normal text-slate-500">({articleHeadings.filter((heading) => heading.depth === 2 || heading.depth === 3).length} sections)</span>
+            </summary>
+            <nav aria-label="In this guide" className="mt-4 border-t border-slate-100 pt-3">
+              <ol className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
+                {articleHeadings.filter((heading) => heading.depth === 2 || heading.depth === 3).map((heading) => (
+                  <li key={heading.id} className={heading.depth === 3 ? "pl-5" : ""}>
+                    <a href={`#${heading.id}`} className="text-sm leading-6 text-[#008f5a] hover:underline">{heading.title}</a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </details>
+        )}
         <ArticleShare title={post.title} url={`https://www.earnpouch.com/blog/${post.slug}`} />
-        {post.primaryCpaUrl && <div className="md:hidden"><QuickPickDetails post={post} /></div>}
         {articleParts.length > 0 && (
           <article className="article-content prose prose-slate mx-auto mt-9 max-w-none rounded-2xl border border-slate-200 bg-white px-6 py-7 shadow-[0_12px_36px_rgba(15,23,42,0.05)] first:prose-p:text-lg first:prose-p:leading-8 first:prose-p:text-slate-700 prose-headings:font-semibold prose-p:leading-8 prose-li:leading-7 prose-a:font-semibold prose-a:underline-offset-4 prose-h2:mt-12 prose-h2:border-l-4 prose-h2:border-emerald-500 prose-h2:pl-4 prose-h2:leading-tight prose-h3:mt-8 prose-blockquote:rounded-r-lg prose-blockquote:bg-emerald-50/70 prose-blockquote:px-5 prose-blockquote:py-2 prose-blockquote:border-emerald-500 prose-blockquote:text-slate-600 prose-img:rounded-xl [&_p]:max-w-[72ch] [&_ul]:max-w-[72ch] [&_ol]:max-w-[72ch] sm:px-10 sm:py-10 lg:px-12 lg:py-12">
           {articleParts.map((part, index) => part.type === "cpa-widget"
@@ -105,12 +150,15 @@ export default async function BlogPostPage({ params }: PageProps) {
           <h2 id="related-guides-title" className="editorial-serif mt-2 text-3xl text-slate-950">More guides you might like</h2>
           <div className="mt-6 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {relatedPosts.map((relatedPost) => <article key={relatedPost.slug} className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 p-5 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg focus-within:border-emerald-400 focus-within:ring-2 focus-within:ring-emerald-100">
-              <p className="w-fit rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-800">{relatedPost.category}</p>
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-bold uppercase tracking-wider text-emerald-800">
+                <span>{relatedPost.category}</span><span className="text-slate-300" aria-hidden="true">/</span>
+                <span>{getReadingTimeMinutes(relatedPost.content)} min read</span>
+              </div>
               <h3 className="editorial-serif mt-4 text-xl leading-tight text-slate-950">
-                <Link href={`/blog/${relatedPost.slug}`} className="rounded-sm transition-colors group-hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700">{relatedPost.title}</Link>
+                <Link href={`/blog/${relatedPost.slug}`} className="rounded-sm transition-colors group-hover:text-[#008f5a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700">{relatedPost.title}</Link>
               </h3>
               <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">{relatedPost.excerpt}</p>
-              <Link href={`/blog/${relatedPost.slug}`} className="mt-5 inline-flex w-fit items-center gap-2 text-sm font-bold text-blue-700 transition-colors hover:text-blue-800">
+              <Link href={`/blog/${relatedPost.slug}`} className="mt-5 inline-flex w-fit items-center gap-2 text-sm font-bold text-[#008f5a] transition-colors hover:text-emerald-900">
                 Read guide <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
               </Link>
             </article>)}
@@ -119,7 +167,8 @@ export default async function BlogPostPage({ params }: PageProps) {
         <div className="mt-10 border-t border-slate-200 pt-5 text-xs leading-5 text-slate-600">
           {post.quickPick?.disclaimer?.trim() && <p>{post.quickPick.disclaimer.trim()}</p>}
           <p className={post.quickPick?.disclaimer?.trim() ? "mt-2" : ""}>
-            This article is for informational purposes only and is not financial, tax, or legal advice. See our <Link href="/affiliate-disclosure" className="font-semibold text-blue-700 underline">affiliate disclosure</Link>.
+            This article is for informational purposes only and is not financial, tax, or legal advice.
+            {!post.primaryCpaUrl && <> See our <Link href="/affiliate-disclosure" className="font-semibold text-[#008f5a] underline">affiliate disclosure</Link>.</>}
           </p>
         </div>
       </div>

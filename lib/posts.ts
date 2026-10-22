@@ -7,9 +7,20 @@ export const postDirectory = path.join(process.cwd(), "content", "posts");
 export type PostFaq = { question: string; answer: string };
 export type ComparisonEntry = { name: string; bonus: string; cashoutMin: string; payoutMethod: string; url?: string };
 export type QuickPick = { name: string; rating?: number; reviewCount?: number; bonus: string; cashoutMin: string; payoutMethod: string; features: string[]; steps?: string[]; ctaLabel?: string; mobileCtaNotice?: string; nextStepTitle?: string; nextStepDescription?: string; disclaimer?: string };
-export type Post = { slug: string; title: string; category: PostCategory; date: string; excerpt: string; coverImage?: string; primaryCpaUrl?: string; tags: string[]; published: boolean; content: string; faqs: PostFaq[]; quickPick?: QuickPick; comparison: ComparisonEntry[] };
+export type Post = { slug: string; title: string; category: PostCategory; date: string; lastReviewed?: string; excerpt: string; coverImage?: string; primaryCpaUrl?: string; tags: string[]; published: boolean; content: string; faqs: PostFaq[]; quickPick?: QuickPick; comparison: ComparisonEntry[] };
 
 function isCategory(value: unknown): value is PostCategory { return typeof value === "string" && categories.includes(value as PostCategory); }
+
+function parseDate(value: unknown): string | undefined {
+  const date = value instanceof Date && !Number.isNaN(value.getTime())
+    ? value.toISOString().slice(0, 10)
+    : typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)
+      ? value
+      : undefined;
+  if (!date) return undefined;
+  const parsed = new Date(`${date}T12:00:00Z`);
+  return Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== date ? undefined : date;
+}
 
 function parseQuickPick(value: unknown, title: string): QuickPick | undefined {
   if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
@@ -42,7 +53,7 @@ function parsePost(slug: string, source: string): Post | null {
   const { data, content } = matter(source);
   if (typeof data.title !== "string" || !isCategory(data.category) || typeof data.date !== "string" || typeof data.excerpt !== "string") return null;
   return {
-    slug, title: data.title, category: data.category, date: data.date, excerpt: data.excerpt,
+    slug, title: data.title, category: data.category, date: data.date, lastReviewed: parseDate(data.lastReviewed), excerpt: data.excerpt,
     coverImage: typeof data.coverImage === "string" ? data.coverImage : undefined,
     primaryCpaUrl: typeof data.primaryCpaUrl === "string" ? data.primaryCpaUrl : undefined,
     tags: Array.isArray(data.tags) ? data.tags.filter((tag: unknown): tag is string => typeof tag === "string") : [],
