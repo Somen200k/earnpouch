@@ -6,7 +6,7 @@ import type { Post } from "@/lib/posts";
 export function OfferCta({ post, secondary = false, compact = false }: { post: Post; secondary?: boolean; compact?: boolean }) {
   const label = getCtaButtonLabel(post);
   const destinationNote = post.category === "Career & Side Income"
-    ? "Independent job-search service · Verify current listings."
+    ? "Third-party offer · Review its terms before continuing."
     : post.category === "Giveaways & Sweepstakes"
       ? "Independent promotion · Review the current rules."
       : "Third-party offer · Review current terms.";

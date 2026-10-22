@@ -3,13 +3,6 @@ import type { Post, QuickPick } from "@/lib/posts";
 import { OfferCta } from "@/components/OfferCta";
 
 export function QuickPickHero({ post }: { post: Post }) {
-  const summaryLabel = post.category === "Giveaways & Sweepstakes"
-    ? "Promotion overview"
-    : post.category === "Career & Side Income"
-      ? "Job search overview"
-      : post.category === "Reward Apps"
-        ? "Rewards guide snapshot"
-        : "Budget guide snapshot";
   const pick: QuickPick = post.quickPick ?? {
     name: post.title,
     bonus: "See current offer",
@@ -21,11 +14,28 @@ export function QuickPickHero({ post }: { post: Post }) {
       "Confirm payout details directly with the provider",
     ],
   };
-  const description = post.category === "Career & Side Income"
+  const offerContext = `${post.title} ${pick.name} ${pick.bonus}`.toLowerCase();
+  const isJobSearchOffer = post.category === "Career & Side Income"
+    && /\b(job|opening|employment|career|warehouse|retail)\b/.test(offerContext);
+  const isMicrotaskGuide = /\b(micro-?tasks?|surveys?|research panels?)\b/.test(offerContext);
+  const summaryLabel = post.category === "Giveaways & Sweepstakes"
+    ? "Promotion overview"
+    : isJobSearchOffer
+      ? "Job search overview"
+      : isMicrotaskGuide
+        ? "Separate offer"
+        : post.category === "Reward Apps"
+          ? "Rewards guide snapshot"
+          : post.category === "Smart Budgeting"
+            ? "Budget guide snapshot"
+            : "Offer overview";
+  const description = isJobSearchOffer
     ? "Compare listings, then confirm the employer, current opening, and application route before sharing details."
     : post.category === "Giveaways & Sweepstakes"
       ? "Check the campaign sponsor, eligibility, and current rules before deciding whether to enter."
-      : "Review the details summarized in this guide and confirm current requirements directly with the provider.";
+      : isMicrotaskGuide
+        ? "This promotion is separate from micro-task work and platform payouts. Review its own rules and privacy terms before deciding whether to participate."
+        : "Review the details summarized in this guide and confirm current requirements directly with the provider.";
   return (
     <section className="rounded-2xl border border-slate-200 border-l-4 border-l-[#00a86b] bg-white p-5 shadow-sm md:p-6">
       <div className="flex flex-wrap items-center gap-3">
